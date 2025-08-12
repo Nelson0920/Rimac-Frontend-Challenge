@@ -1,9 +1,15 @@
-function App() {
+import { Routes, Route } from 'react-router-dom'
+import Home from './routes/home.tsx'
+import Login from './routes/login.tsx'
+import NotFound from './routes/notFound.tsx'
+
+export default function App() {
   return (
-    <>
-      <h1 className='text-xl'>Hello World</h1>
-    </>
+    <Routes>
+      <Route path="/" element={<Login />} />
+      <Route path="/home" element={<Home />} />
+
+      <Route path="*" element={<NotFound />} />
+    </Routes>
   )
 }
-
-export default App
