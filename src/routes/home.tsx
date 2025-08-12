@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { CardPlan, CardSelectPlan } from "../components/common";
+import { CardPlan, CardSelectPlan, ProgressBar } from "../components/common";
 
 import IconProtectionLight from "/icons/IconProtectionLight.svg";
 import IconAddUserLight from "/icons/iconAddUserLight.svg";
@@ -10,6 +10,12 @@ export default function Home() {
   return (
     <div>
       <h1>Home</h1>
+
+      <ProgressBar
+        currentStep={2}
+        totalSteps={2}
+        stepLabels={["Planes y coberturas", "Resumen"]}
+      />
 
       <CardSelectPlan
         option={1}
@@ -31,7 +37,11 @@ export default function Home() {
         plan={{
           name: "Plan Básico",
           price: 100,
-          description: ["Cobertura básica", "Atención médica general", "Emergencias incluidas"],
+          description: [
+            "Cobertura básica",
+            "Atención médica general",
+            "Emergencias incluidas",
+          ],
           age: 23,
         }}
         previous_price={49}
