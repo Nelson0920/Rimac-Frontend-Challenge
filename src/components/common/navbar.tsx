@@ -8,12 +8,9 @@ type NavbarProps = {
 
 export function Navbar({ brand, links }: NavbarProps) {
   return (
-    <nav
-      className='navbar bg-white text-grey100'
-    >
+    <nav className='navbar bg-white text-grey100'>
       <div className='container mx-auto flex items-center justify-between p-4'>
         {brand}
-
         <div className='flex gap-4'>{links}</div>
       </div>
     </nav>
@@ -23,7 +20,7 @@ export function Navbar({ brand, links }: NavbarProps) {
 Navbar.Brand = function NavbarBrand({ children }: { children?: ReactNode }) {
   return (
     <div className='navbar__brand flex items-center gap-2'>
-      <img src='src/public/icons/logo.svg' alt='Logo' className='h-10 w-auto' />
+      <img src='/icons/logo.svg' alt='Logo' className='h-10 w-auto' />
       {children && <span className='font-bold text-lg'>{children}</span>}
     </div>
   )
@@ -31,9 +28,7 @@ Navbar.Brand = function NavbarBrand({ children }: { children?: ReactNode }) {
 
 Navbar.Item = function NavbarItem({ children }: { children: ReactNode }) {
   return (
-    <div
-      className='navbar__item px-3 py-2 rounded cursor-pointer text-grey100'
-    >
+    <div className='navbar__item px-3 py-2 rounded cursor-pointer text-grey100'>
       {children}
     </div>
   )

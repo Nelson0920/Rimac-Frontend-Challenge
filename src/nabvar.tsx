@@ -13,7 +13,7 @@ export function Nabvar() {
             <>
               <button
                 onClick={() => setIsOpen(true)}
-                className='btn-open-modal'
+                className='btn-open-modal hover:underline'
               >
                 ¡Compra por este medio!
               </button>
@@ -34,7 +34,7 @@ export function Nabvar() {
           <Navbar.Link to='/about'>
             <div className='flex flex-row flex-nowrap items-center space-x-1 text-lg'>
               <img
-                src='src/public/icons/phone.svg'
+                src='/icons/phone.svg'
                 alt='Logo'
                 className='h-6 w-auto'
               />
