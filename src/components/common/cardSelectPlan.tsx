@@ -1,6 +1,5 @@
 import { useMediaQuery } from "react-responsive";
-import IconCheckWhite from "../../public/icons/check-white.svg";
-import { COLORS } from "../../styles/var";
+import IconCheckWhite from "/public/icons/check-white.svg";
 
 type TProps = {
   option: number;
@@ -32,7 +31,7 @@ const CardSelectPlan: React.FC<TProps> = ({
         bg-white
         shadow-[0_1px_32px_rgba(174,172,243,0.35)]
         ${isSelected ? "shadow-none" : ""}
-        ${isSelected ? `border-[${COLORS.grey100}]` : "border-transparent"}
+        ${isSelected ? `border-grey100` : "border-transparent"}
       `}
       style={{
         padding: "2.5rem 1.5rem",
@@ -49,10 +48,11 @@ const CardSelectPlan: React.FC<TProps> = ({
           justify-center items-center
           flex
           transition-all duration-300
+          ${isSelected ? 'bg-green' : 'bg-white'}
         `}
         style={{
-          borderColor: COLORS.mutedBlue,
-          backgroundColor: isSelected ? COLORS.green : COLORS.white,
+          borderColor: "#A9AFD9",
+          backgroundColor: isSelected ? '#3fb70c' : "#fff",
         }}
       >
         {isSelected && <img src={IconCheckWhite} alt="Check" />}
@@ -68,7 +68,7 @@ const CardSelectPlan: React.FC<TProps> = ({
         />
         <p
           className={`
-            text-[${COLORS.darkBlue1}]
+            text-darkBlue1
             text-xl font-bold
             leading-7
             tracking-[-0.2px]
@@ -80,7 +80,7 @@ const CardSelectPlan: React.FC<TProps> = ({
 
       <p
         className={`
-          text-[${COLORS.darkBlue1}]
+          text-darkBlue1
           text-[12px]
           mt-2
         `}

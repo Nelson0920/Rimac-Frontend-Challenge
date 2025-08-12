@@ -1,7 +1,8 @@
 import { useState } from "react";
-import { CardSelectPlan, CardPlan} from "../components/common/index";
-import IconProtectionLight from "../public/icons/IconProtectionLight.svg";
-import IconAddUserLight from "../public/icons/iconAddUserLight.svg";
+import { CardPlan, CardSelectPlan } from "../components/common";
+
+import IconProtectionLight from "/icons/IconProtectionLight.svg";
+import IconAddUserLight from "/icons/iconAddUserLight.svg";
 
 export default function Home() {
   const [selectedOption, setSelectedOption] = useState(1);

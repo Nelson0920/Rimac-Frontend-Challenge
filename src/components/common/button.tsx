@@ -1,5 +1,4 @@
 import React from 'react'
-import { COLORS } from "../../styles/var"
 
 type ButtonProps = {
   label: string
@@ -7,7 +6,7 @@ type ButtonProps = {
   type?: 'button' | 'submit' | 'reset'
   disabled?: boolean
   className?: string
-  color?: string
+  color?: 'primary' | 'secondary'
   size?: 'small' | 'large'
 }
 
@@ -17,7 +16,7 @@ const Button: React.FC<ButtonProps> = ({
   type = 'button',
   disabled = false,
   className = '',
-  color = COLORS.darkBlue2,
+  color = 'primary',
   size = 'large'
 }) => {
 
@@ -37,11 +36,10 @@ const Button: React.FC<ButtonProps> = ({
       type={type}
       onClick={onClick}
       disabled={disabled}
-      style={{
-        backgroundColor: color,
-        ...sizeStyles,
-      }}
-      className={`rounded-[40px] text-white hover:opacity-90 disabled:opacity-50 ${className}`}
+      style={{ ...sizeStyles }}
+      className={`rounded-[40px] text-white hover:opacity-90
+        ${color == 'primary' ? 'bg-darkBlue1' : 'bg-pinkRed'}
+        disabled:opacity-50 ${className}`}
     >
       {label}
     </button>
