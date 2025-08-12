@@ -11,18 +11,22 @@ const Default : React.FC<LayoutProps> = ({
   withFooter=false,
 }) => {
   return (
-    <div className="w-full min-h-screen h-full px-5">
-      <div className="max-w-6xl mx-auto h-full defaultLayout">
+    <div className="w-full min-h-screen defaultLayout">
+      <div className="max-w-6xl w-full h-full mx-auto">
         <Navbar />
+      </div>
 
-        <div className="w-full h-full">
-          {children}
+      <div className="max-w-6xl w-full h-full mx-auto">
+        {children}
+      </div>
+
+      <div className="w-full bg-black">
+        <div className="max-w-6xl w-full mx-auto">
+          {
+            withFooter &&
+            <Footer />
+          }
         </div>
-
-        {
-          withFooter &&
-          <Footer />
-        }
       </div>
     </div>
   )
