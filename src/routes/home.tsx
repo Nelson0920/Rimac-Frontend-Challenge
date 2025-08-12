@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { CardSelectPlan } from "../components/common/cardSelectPlan";
+import { CardSelectPlan, CardPlan} from "../components/common/index";
 import IconProtectionLight from "../public/icons/IconProtectionLight.svg";
 import IconAddUserLight from "../public/icons/iconAddUserLight.svg";
 
@@ -25,6 +25,17 @@ export default function Home() {
         title="Para alguien más"
         description="Realiza una cotización para uno de tus familiares o cualquier persona."
         icon={IconAddUserLight}
+      />
+      <CardPlan
+        plan={{
+          name: "Plan Básico",
+          price: 100,
+          description: ["Cobertura básica", "Atención médica general", "Emergencias incluidas"],
+          age: 23,
+        }}
+        previous_price={49}
+        recommended={true}
+        setPlanSelected={(plan) => console.log("Plan seleccionado:", plan)}
       />
     </div>
   );

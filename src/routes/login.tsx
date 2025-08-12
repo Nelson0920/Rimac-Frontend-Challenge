@@ -15,7 +15,7 @@ export default function Login() {
   return (
     <div className="w-full p-4">
       <h1>Login</h1>
-      <Button label="Primario" onClick={() => alert('Click')} />
+      <Button label="Cotiza aquí" onClick={() => alert('Click')} />
       
       <Input
         type="tel"
