@@ -13,7 +13,7 @@ export default function Home() {
       <h1>Home</h1>
 
       <ProgressBar
-        currentStep={2}
+        currentStep={1}
         totalSteps={2}
         stepLabels={["Planes y coberturas", "Resumen"]}
       />

@@ -1,15 +1,29 @@
-import { Routes, Route } from 'react-router-dom'
-import Home from './routes/home.tsx'
-import Login from './routes/login.tsx'
-import NotFound from './routes/notFound.tsx'
+import { Routes, Route } from "react-router-dom";
+import { AuthProvider } from "./context/auth/AuthContext";
+import ProtectedRoute from "./context/auth/protectedRoute";
+import PublicRoute from "./context/auth/publicRoute";
+
+import Home from "./routes/home";
+import Login from "./routes/login";
+import NotFound from "./routes/notFound";
 
 export default function App() {
   return (
-    <Routes>
-      <Route path="/" element={<Login />} />
-      <Route path="/home" element={<Home />} />
+    <AuthProvider>
+      <Routes>
+        {/* Public Routes */}
+        <Route element={<PublicRoute />}>
+          <Route path="/" element={<Login />} />
+        </Route>
 
-      <Route path="*" element={<NotFound />} />
-    </Routes>
-  )
+        {/* Private Routes */}
+        <Route element={<ProtectedRoute />}>
+          <Route path="/home" element={<Home />} />
+        </Route>
+
+        {/* NotFound */}
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </AuthProvider>
+  );
 }
