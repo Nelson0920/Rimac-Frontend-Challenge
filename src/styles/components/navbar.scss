@@ -1,0 +1,39 @@
+.navbar {
+
+  .hamburger {
+    font-size: 1.5rem;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+  }
+
+  .navbar__brand {
+    font-weight: 800;
+    font-size: 1.25rem;
+  }
+
+  .navbar__link {
+    transition: text-decoration 0.2s ease;
+    font-weight: 700;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  .navbar__item {
+    transition: text-decoration 0.2s ease;
+    font-weight: 700;
+    font-size: small;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+.mobile-menu {
+  .navbar__link {
+    padding: 0.5rem 1rem;
+  }
+}
