@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import { Navbar as Nav } from './components/common/navbar'
-import { Modal } from './components/common/modal'
+import { Navbar as Nav } from '../common'
+import { Modal } from '../common'
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
