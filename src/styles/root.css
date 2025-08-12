@@ -1,7 +1,38 @@
-@import url('https://fonts.googleapis.com/css2?family=Nata+Sans:wght@100..900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Nata+Sans:wght@100..900&display=swap");
 @import "tailwindcss";
 
-* {
-  font-family: "Nata Sans", sans-serif;
-  box-sizing: border-box;
+@theme {
+  --color-*: initial;
+  --color-white: #fff;
+  --color-purple: #3f3cbb;
+  --color-midnight: #121063;
+  --color-tahiti: #3ab7bf;
+  --color-bermuda: #78dcca;
+  --color-darkBlue1: #141938;
+  --color-darkBlue2: #03050F;
+  --color-grey100: #03050F;
+  --color-white: #FFFFFF;
+  --color-blue: #4F4FFF;
+  --color-grayBlue: #7981B2;
+  --color-gradientDarkPurple: linear-gradient(156.04deg, #34263B 27.21%, #13172C 65.81%);
+  --color-gradientPinkPurple: linear-gradient(135deg, #F7052D 34.07%, #CA5AFA 75.27%);
+  --color-lightBlueGray: #D7DBF5;
+  --color-mutedBlue: #A9AFD9;
+  --color-purple: #C333FF;
+  --color-slateBlue: #5E6488;
+  --color-softWhite: #FAFBFF;
+  --color-teal: #00F4E2;
+  --color-lightWhite: #F8F9FF;
+  --color-red: #FF1C44;
+  --color-lightGrayWhite: #EDEFFC;
+  --color-green: #3fb70c;
+  --color-softGray: #C5CBE0;
+  --color-mintGreen: #7DF0BA;
+  --color-violet: #432EFF;
+  --color-gradientTealGreen: linear-gradient(86.01deg, #00F4E2 0%, #00FF7F 100%);
+  --color-paleBlueGray: #CCD1EE;
+  --color-navy: #2B304E;
+  --color-pinkRed: #F7052D;
+  --color-gray-999: #03050F;
+  --color-gray-softened: #5E6488;
 }

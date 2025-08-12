@@ -1,5 +1,4 @@
-import IconCheckWhite from "../../public/icons/check-white.svg";
-import { COLORS } from "../../styles/var";
+import IconCheckWhite from "/icons/check-white.svg";
 
 type OptionItemProps = {
   option: number;
@@ -32,7 +31,7 @@ export function CardSelectPlan({
         w-[280px]
         ${
           isSelected
-            ? `border-[${COLORS.grey100}] shadow-none`
+            ? `border-grey100 shadow-none`
             : "border-transparent"
         }
       `}
@@ -48,11 +47,8 @@ export function CardSelectPlan({
           justify-center items-center
           flex
           transition-all duration-300
+          ${isSelected ? 'bg-green' : 'bg-white'}
         `}
-        style={{
-          borderColor: COLORS.green,
-          backgroundColor: isSelected ? COLORS.green : COLORS.white,
-        }}
       >
         {isSelected && <img src={IconCheckWhite} alt="Check" />}
       </div>
@@ -64,7 +60,7 @@ export function CardSelectPlan({
         />
         <p
           className={`
-              text-[${COLORS.darkBlue1}]
+              text-darkBlue1
               text-xl font-bold
               leading-7
               tracking-[-0.2px]
@@ -74,7 +70,7 @@ export function CardSelectPlan({
         </p>
         <p
           className={`
-              text-[${COLORS.darkBlue1}]
+              text-darkBlue1
               text-[12px]
             `}
         >

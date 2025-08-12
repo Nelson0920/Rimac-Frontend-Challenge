@@ -76,7 +76,7 @@ const Label = () => {
   return (
     <label
       className={`absolute left-4 transition-all duration-200 ${
-        isFloating ? "text-xs top-1 text-[#03050F]" : "top-4 text-[#5E6488]"
+        isFloating ? "text-xs top-1 text-gray-999" : "top-4 text-gray-softened"
       }`}
     >
       {placeholder}
@@ -95,7 +95,7 @@ const Field = (props: InputHTMLAttributes<HTMLInputElement>) => {
       onChange={(e) => setValue(e.target.value)}
       onFocus={() => setIsFocused(true)}
       onBlur={() => setIsFocused(false)}
-      className="w-full px-4 h-full bg-transparent outline-none rounded-md border border-[#5E6488] focus:text-[#03050F] focus:border-[#03050F] focus:border-2 focus:px-[15px]"
+      className="w-full px-4 h-full bg-transparent outline-none rounded-md border border-gray-softened focus:text-gray-999 focus:border-gray-999 focus:border-2 focus:px-[15px]"
     />
   )
 }
