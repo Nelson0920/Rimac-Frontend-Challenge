@@ -1,15 +1,15 @@
 import { useState } from 'react'
-import { Navbar } from './components/common/navbar'
+import { Navbar as Nav } from './components/common/navbar'
 import { Modal } from './components/common/modal'
 
-export function Nabvar() {
+export function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
   return (
-    <Navbar
-      brand={<Navbar.Brand />}
+    <Nav
+      brand={<Nav.Brand />}
       links={
         <div className='flex items-center'>
-          <Navbar.Item>
+          <Nav.Item>
             <>
               <button
                 onClick={() => setIsOpen(true)}
@@ -30,8 +30,8 @@ export function Nabvar() {
                 </Modal.Body>
               </Modal>
             </>
-          </Navbar.Item>
-          <Navbar.Link to='/about'>
+          </Nav.Item>
+          <Nav.Link to='/about'>
             <div className='flex flex-row flex-nowrap items-center space-x-1 text-lg'>
               <img
                 src='/icons/phone.svg'
@@ -40,7 +40,7 @@ export function Nabvar() {
               />
               (01) 411 6001
             </div>
-          </Navbar.Link>
+          </Nav.Link>
         </div>
       }
     />

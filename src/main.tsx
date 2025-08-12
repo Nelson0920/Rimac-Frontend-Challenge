@@ -5,12 +5,12 @@ import App from './App.tsx'
 
 import './styles/root.css'
 import './styles/index.scss'
-import { Nabvar } from './nabvar.tsx'
+import { Navbar } from './nabvar.tsx'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <BrowserRouter>
-      <Nabvar />
+    <Navbar />
       <App />
     </BrowserRouter>
   </StrictMode>
