@@ -13,7 +13,7 @@ export function Nabvar() {
             <>
               <button
                 onClick={() => setIsOpen(true)}
-                className='btn-open-modal'
+                className='btn-open-modal hover:underline'
               >
                 ¡Compra por este medio!
               </button>
