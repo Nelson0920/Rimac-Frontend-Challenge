@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Default } from "../components/layout";
 import { useNavigate } from "react-router-dom";
 import { Button, Input } from "../components/common";
@@ -25,6 +25,13 @@ export default function Login() {
     navigate("/home");
   };
 
+  const [loading, setLoading] = useState(true)
+  
+    useEffect(() => {
+      const timer = setTimeout(() => setLoading(false), 4000)
+      return () => clearTimeout(timer)
+    }, [])
+
   return (
     <Default withFooter>
       <div>
@@ -33,7 +40,7 @@ export default function Login() {
           <div className={`w-1/2 h-full circleRight`} />
         </div>
         <BackButton />
-        <CardSummary>
+        <CardSummary loading={loading}>
           <CardSummary.Title>
             <h3 className='text-xs font-bold'>PRECIOS CALCULADOS PARA:</h3>
             <div className='flex flex-row space-x-2'>
