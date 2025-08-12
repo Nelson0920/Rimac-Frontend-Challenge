@@ -1,6 +1,5 @@
 import Button from "./button";
 import type { Plan } from "../../lib/types/types";
-import IconHomeLight from "/public/icons/iconHomeLight.svg";
 
 interface TProps {
   plan: Plan;
@@ -51,7 +50,7 @@ const CardPlan: React.FC<TProps> = ({
                 ${price} al mes
               </span>
             </div>
-            <img src={IconHomeLight} alt="Home icon" className="w-[80px]" />
+            <img src="/public/icons/iconHomeLight.svg" alt="Home icon" className="w-[80px]" />
           </div>
 
           <div

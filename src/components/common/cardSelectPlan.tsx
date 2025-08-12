@@ -1,5 +1,4 @@
-import { useMediaQuery } from "react-responsive";
-import IconCheckWhite from "/public/icons/check-white.svg";
+import { useMediaQuery } from "react-responsive"
 
 type TProps = {
   option: number;
@@ -55,7 +54,7 @@ const CardSelectPlan: React.FC<TProps> = ({
           backgroundColor: isSelected ? '#3fb70c' : "#fff",
         }}
       >
-        {isSelected && <img src={IconCheckWhite} alt="Check" />}
+        {isSelected && <img src="/public/icons/check-white.svg" alt="Check" />}
       </div>
 
       <div
