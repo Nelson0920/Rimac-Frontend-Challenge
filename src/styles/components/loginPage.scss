@@ -17,7 +17,7 @@
   border-radius: 50%;
   filter: blur(50px);
   transform: translateY(-50%);
-  animation: floatCircle 4s ease-in-out infinite;
+  animation: floatCircle2 4s ease-in-out infinite;
   z-index: -1;
 }
 
@@ -36,11 +36,11 @@
   border-radius: 50%;
   filter: blur(50px);
   transform: translateY(-50%);
-  animation: floatCircle 4s ease-in-out infinite reverse;
+  animation: floatCircle1 4s ease-in-out infinite reverse;
   z-index: -1;
 }
 
-@keyframes floatCircle {
+@keyframes floatCircle1 {
   0% {
     transform: translateY(-50%) translateY(120px);
   }
@@ -49,5 +49,17 @@
   }
   100% {
     transform: translateY(-50%) translateY(120px);
+  }
+}
+
+@keyframes floatCircle2 {
+  0% {
+    transform: translateY(-50%) translateY(-80px);
+  }
+  50% {
+    transform: translateY(-50%) translateY(120px);
+  }
+  100% {
+    transform: translateY(-50%) translateY(-80px);
   }
 }
