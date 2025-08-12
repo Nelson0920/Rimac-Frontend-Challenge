@@ -1,6 +1,7 @@
-import IconCheckWhite from "/icons/check-white.svg";
+import { useMediaQuery } from "react-responsive";
+import IconCheckWhite from "/public/icons/check-white.svg";
 
-type OptionItemProps = {
+type TProps = {
   option: number;
   selectedOption: number;
   onSelect: (option: number) => void;
@@ -9,15 +10,16 @@ type OptionItemProps = {
   icon?: string;
 };
 
-export function CardSelectPlan({
+const CardSelectPlan: React.FC<TProps> = ({
   option,
   selectedOption,
   onSelect,
   title,
   description,
   icon,
-}: OptionItemProps) {
+}) => {
   const isSelected = option === selectedOption;
+  const isMobile = useMediaQuery({ maxWidth: 768 });
 
   return (
     <div
@@ -25,17 +27,16 @@ export function CardSelectPlan({
         relative
         cursor-pointer 
         flex flex-col
-        rounded-[1.5rem] border-3
+        rounded-[1.5rem] border-[3px]
         bg-white
         shadow-[0_1px_32px_rgba(174,172,243,0.35)]
-        w-[280px]
-        ${
-          isSelected
-            ? `border-grey100 shadow-none`
-            : "border-transparent"
-        }
+        ${isSelected ? "shadow-none" : ""}
+        ${isSelected ? `border-grey100` : "border-transparent"}
       `}
-      style={{ padding: "2.5rem 1.5rem" }}
+      style={{
+        padding: "2.5rem 1.5rem",
+        width: isMobile ? "366px" : "280px",
+      }}
       onClick={() => onSelect(option)}
       role="button"
       tabIndex={0}
@@ -49,34 +50,45 @@ export function CardSelectPlan({
           transition-all duration-300
           ${isSelected ? 'bg-green' : 'bg-white'}
         `}
+        style={{
+          borderColor: "#A9AFD9",
+          backgroundColor: isSelected ? '#3fb70c' : "#fff",
+        }}
       >
         {isSelected && <img src={IconCheckWhite} alt="Check" />}
       </div>
-      <div className="flex flex-col gap-2">
+
+      <div
+        className={`flex gap-2 ${isMobile ? "flex-row items-center" : "flex-col"}`}
+      >
         <img
           src={icon}
           alt="Protection Icon"
-          className=" h-[48px] w-[48px]"
+          className="h-[48px] w-[48px]"
         />
         <p
           className={`
-              text-darkBlue1
-              text-xl font-bold
-              leading-7
-              tracking-[-0.2px]
-            `}
+            text-darkBlue1
+            text-xl font-bold
+            leading-7
+            tracking-[-0.2px]
+          `}
         >
           {title}
         </p>
-        <p
-          className={`
-              text-darkBlue1
-              text-[12px]
-            `}
-        >
-          {description}
-        </p>
       </div>
+
+      <p
+        className={`
+          text-darkBlue1
+          text-[12px]
+          mt-2
+        `}
+      >
+        {description}
+      </p>
     </div>
   );
 }
+
+export default CardSelectPlan;
