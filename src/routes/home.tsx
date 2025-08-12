@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { CardPlan, CardSelectPlan, ProgressBar } from "../components/common";
+import { Default } from "../components/layout"
 
 import IconProtectionLight from "/icons/IconProtectionLight.svg";
 import IconAddUserLight from "/icons/iconAddUserLight.svg";
@@ -8,7 +9,7 @@ export default function Home() {
   const [selectedOption, setSelectedOption] = useState(1);
 
   return (
-    <div>
+    <Default>
       <h1>Home</h1>
 
       <ProgressBar
@@ -48,6 +49,6 @@ export default function Home() {
         recommended={true}
         setPlanSelected={(plan) => console.log("Plan seleccionado:", plan)}
       />
-    </div>
+    </Default>
   );
 }

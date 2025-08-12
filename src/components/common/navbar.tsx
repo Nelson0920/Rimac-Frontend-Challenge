@@ -9,7 +9,7 @@ type NavbarProps = {
 export function Navbar({ brand, links }: NavbarProps) {
   return (
     <nav className='navbar bg-transparent text-grey100'>
-      <div className='container mx-auto flex items-center justify-between p-4'>
+      <div className='flex items-center justify-between p-4'>
         {brand}
         <div className='flex gap-4'>{links}</div>
       </div>
