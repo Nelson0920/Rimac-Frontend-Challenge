@@ -1,0 +1,53 @@
+.containerBackground {
+  overflow: hidden;
+}
+
+.circleLeft {
+  position: absolute;
+  top: 65%;
+  left: -400px; 
+  width: 800px;
+  height: 800px;
+  background: radial-gradient(
+    circle,
+    rgba(255,126,185,0.6) 0%,
+    rgba(142,68,173,0.4) 40%,
+    transparent 70%
+  );
+  border-radius: 50%;
+  filter: blur(50px);
+  transform: translateY(-50%);
+  animation: floatCircle 4s ease-in-out infinite;
+  z-index: -1;
+}
+
+.circleRight {
+  position: absolute;
+  top: 50%;
+  right: -400px; 
+  width: 800px;
+  height: 800px;
+  background: radial-gradient(
+    circle,
+    rgba(94,231,223,0.6) 0%,
+    rgba(59,130,246,0.4) 40%,
+    transparent 70%
+  );
+  border-radius: 50%;
+  filter: blur(50px);
+  transform: translateY(-50%);
+  animation: floatCircle 4s ease-in-out infinite reverse;
+  z-index: -1;
+}
+
+@keyframes floatCircle {
+  0% {
+    transform: translateY(-50%) translateY(120px);
+  }
+  50% {
+    transform: translateY(-50%) translateY(-80px);
+  }
+  100% {
+    transform: translateY(-50%) translateY(120px);
+  }
+}
