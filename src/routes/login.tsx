@@ -62,8 +62,11 @@ export default function Login() {
               asesoría. 100% online.
             </p>
             <div className='flex flex-row'>
-              <div className='w-1/4'>
-                <Select placeholder='Doc.'>
+              <div className='w-1/2'>
+                <Select
+                  placeholder='DNI'
+                  rounded='left'
+                >
                   <Select.Label />
                   <Select.Trigger />
                   <Select.Options>
@@ -72,12 +75,13 @@ export default function Login() {
                   </Select.Options>
                 </Select>
               </div>
-              <div className='w-3/4'>
+              <div className='w-1/2'>
                 <Input
                   type='tel'
                   placeholder='Nro. del documento'
                   value={document}
                   onChange={handleDocumentInputChange}
+                  rounded='right'
                 >
                   <Input.Label />
                   <Input.Field pattern='[0-9]{7,12}' />
@@ -89,6 +93,7 @@ export default function Login() {
               placeholder='Celular'
               value={phone}
               onChange={handlePhoneInputChange}
+              rounded='full'
             >
               <Input.Label />
               <Input.Field pattern='[0-9]{7,12}' />

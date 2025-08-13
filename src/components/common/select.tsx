@@ -13,6 +13,7 @@ type SelectContextType = {
   isOpen: boolean
   setIsOpen: (val: boolean) => void
   placeholder: string
+  rounded: 'full' | 'left' | 'right'
 }
 
 const SelectContext = createContext<SelectContextType | null>(null)
@@ -27,6 +28,7 @@ type SelectProps = {
   children: ReactNode
   placeholder: string
   value?: string
+  rounded: 'full' | 'left' | 'right'
   onChange?: (val: string) => void
 }
 
@@ -34,6 +36,7 @@ const Select = ({
   children,
   placeholder,
   value,
+  rounded,
   onChange,
 }: SelectProps) => {
   const [internalValue, setInternalValue] = useState<string>('')
@@ -61,9 +64,10 @@ const Select = ({
         isOpen,
         setIsOpen,
         placeholder,
+        rounded,
       }}
     >
-      <div className="relative w-full h-[56px] rounded-md">
+      <div className="relative w-full h-[56px]">
         {children}
       </div>
     </SelectContext.Provider>
@@ -76,7 +80,7 @@ const SelectLabel = () => {
 
   return (
     <label
-      className={`absolute left-4 transition-all duration-200 ${
+      className={`absolute left-4 transition-all duration-200 bg-transparent ${
         isFloating ? "text-xs top-1 text-greyborder-grey100" : "top-4 text-slateBlue"
       }`}
     >
@@ -86,12 +90,25 @@ const SelectLabel = () => {
 }
 
 const SelectTrigger = () => {
-  const { value, isOpen, setIsOpen, setIsFocused } = useSelectContext()
+  const {
+    value,
+    isOpen,
+    setIsOpen,
+    setIsFocused,
+    rounded,
+  } = useSelectContext()
+
+  const radius = {
+    full: { borderRadius: '6px' },
+    left: { borderTopLeftRadius: '6px', borderBottomLeftRadius: '6px', borderTopRightRadius: '0px', borderBottomRightRadius: '0px' },
+    right: { borderTopRightRadius: '6px', borderBottomRightRadius: '6px', borderTopLeftRadius: '0px', borderBottomLeftRadius: '0px' }
+  }
   
   return (
     <button
       type="button"
-      className="w-full px-4 h-full bg-transparent outline-none rounded-md border border-slateBlue focus:text-greyborder-grey100 focus:border-grey100 focus:border-2 focus:px-[15px] text-left pt-4 flex items-center justify-between"
+      className="w-full px-4 h-full bg-transparent outline-none rounded-md border border-slateBlue focus:text-greyborder-grey100 focus:border-grey100 focus:border-2 focus:px-[15px] text-left flex items-center justify-between"
+      style={ radius[rounded] }
       onClick={() => {
         setIsOpen(!isOpen)
         setIsFocused(!isOpen)
@@ -121,7 +138,7 @@ const SelectOptions = ({ children }: { children: ReactNode }) => {
   if (!isOpen) return null
 
   return (
-    <div className="absolute z-10 mt-1 w-full bg-white rounded-md shadow-lg border border-grey100 max-h-60 overflow-auto">
+    <div className="absolute z-10 mt-1 w-full bg-white shadow-lg border border-grey100 max-h-60 overflow-auto">
       {children}
     </div>
   )

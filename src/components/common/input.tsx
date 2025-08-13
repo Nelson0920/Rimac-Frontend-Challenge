@@ -13,6 +13,7 @@ type InputContextType = {
   setIsFocused: (val: boolean) => void
   placeholder: string
   type: string
+  rounded: 'full' | 'left' | 'right'
 }
 
 const InputContext = createContext<InputContextType | null>(null)
@@ -28,6 +29,7 @@ type InputProps = {
   placeholder: string
   type?: string
   value?: string
+  rounded: 'full' | 'left' | 'right'
   onChange?: (val: string) => void
 }
 
@@ -36,6 +38,7 @@ const Input = ({
   placeholder,
   type = "text",
   value,
+  rounded,
   onChange,
 }: InputProps) => {
   const [internalValue, setInternalValue] = useState<string>('')
@@ -60,9 +63,10 @@ const Input = ({
         setIsFocused,
         placeholder,
         type,
+        rounded,
       }}
     >
-      <div className="relative w-full h-[56px] rounded-md">
+      <div className="relative w-full h-[56px]">
         {children}
       </div>
     </InputContext.Provider>
@@ -85,7 +89,19 @@ const Label = () => {
 }
 
 const Field = (props: InputHTMLAttributes<HTMLInputElement>) => {
-  const { value, setValue, setIsFocused, type } = useInputContext()
+  const {
+    value,
+    setValue,
+    setIsFocused,
+    type,
+    rounded,
+  } = useInputContext()
+
+  const radius = {
+    full: { borderRadius: '6px' },
+    left: { borderTopLeftRadius: '6px', borderBottomLeftRadius: '6px', borderTopRightRadius: '0px', borderBottomRightRadius: '0px' },
+    right: { borderTopRightRadius: '6px', borderBottomRightRadius: '6px', borderTopLeftRadius: '0px', borderBottomLeftRadius: '0px' }
+  }
 
   return (
     <input
@@ -95,7 +111,8 @@ const Field = (props: InputHTMLAttributes<HTMLInputElement>) => {
       onChange={(e) => setValue(e.target.value)}
       onFocus={() => setIsFocused(true)}
       onBlur={() => setIsFocused(false)}
-      className="w-full px-4 h-full bg-transparent outline-none rounded-md border border-gray-softened focus:text-gray-999 focus:border-gray-999 focus:border-2 focus:px-[15px]"
+      className="w-full px-4 h-full bg-transparent outline-none border border-gray-softened focus:text-gray-999 focus:border-gray-999 focus:border-2 focus:px-[15px]"
+      style={ radius[rounded] }
     />
   )
 }
