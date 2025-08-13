@@ -106,7 +106,6 @@ export default function Login() {
     } else {
       if (phone === user?.phoneNumber && document === user.dniNumber) {
         const Token = Base64.encode(JSON.stringify(user))
-        console.log(Token)
         login(Token)
         navigate('/home')
       } else {

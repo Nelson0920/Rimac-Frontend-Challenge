@@ -11,6 +11,7 @@ import IconAddUserLight from "/icons/iconAddUserLight.svg";
 import BackButton from "../components/common/backButton";
 import CardSummary from "../components/common/cardSummary";
 import { base64ToUtf8, getAgeFromBirthDay } from "../lib/util/functions";
+import { useAuth } from "../context/auth/authContext";
 
 interface TUser extends User {
   phoneNumber: string;
@@ -25,7 +26,8 @@ export default function Home() {
   const { data: resPlansData } = useGetPlans();
   const [page, setPage] = useState(0);
   const [progressBar, setProgressBar] = useState(1);
-  
+  const { logout } = useAuth();
+
   const isMobile = useMediaQuery({ maxWidth: 1000 });
   const cardsPerPage = isMobile ? 1 : plansUser?.length;
   const totalPages = Math.ceil((plansUser?.length || 0) / (cardsPerPage || 0));
@@ -85,11 +87,19 @@ export default function Home() {
     >
       {!isMobile && (
         <div className="ml-26">
-          <BackButton />
+          <BackButton
+            onClick={() => {
+              if (progressBar === 2) {
+                setProgressBar(1);
+              } else {
+                logout();
+              }
+            }}
+          />
         </div>
       )}
 
-      <div className="flex flex-col items-center justify-center mt-14 w-full mb-5">
+      <div className="flex flex-col items-center justify-center mt-14 w-full">
         {progressBar === 1 ? (
           <>
             <div className={`mb-8 text-center`}>
