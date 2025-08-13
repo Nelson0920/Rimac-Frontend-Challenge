@@ -79,6 +79,15 @@ export default function Home() {
     return <Loader />
   }
 
+  const handleBackButton = () => {
+    if (progressBar === 2) {
+      setProgressBar(1)
+      setSelectedOption(0)
+    } else {
+      logout()
+    }
+  }
+
   return (
     <Default
       withAdditional={
@@ -86,6 +95,7 @@ export default function Home() {
           currentStep={progressBar}
           totalSteps={2}
           stepLabels={['Planes y coberturas', 'Resumen']}
+          backButton={handleBackButton}
         />
       }
     >
