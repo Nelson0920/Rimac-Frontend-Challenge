@@ -20,22 +20,21 @@ interface TUser extends User {
 }
 
 export default function Home() {
-  const [selectedOption, setSelectedOption] = useState(0);
-  const [loading, setLoading] = useState(true);
-  const [user, setUser] = useState<TUser>();
-  const [plansUser, setPlansUser] = useState<Plan[]>();
-  const [page, setPage] = useState(0);
-  const [progressBar, setProgressBar] = useState(1);
- const { logout } = useAuth()
+  const [selectedOption, setSelectedOption] = useState(0)
+  const [loading, setLoading] = useState(true)
+  const [user, setUser] = useState<TUser>()
+  const [plansUser, setPlansUser] = useState<Plan[]>()
+  const isMobile = useMediaQuery({ maxWidth: 1000 })
+  const navigate = useNavigate()
+  const [page, setPage] = useState(0)
+  const [progressBar, setProgressBar] = useState(1)
+  const cardsPerPage = isMobile ? 1 : plansUser?.length
+  const totalPages = Math.ceil((plansUser?.length || 0) / (cardsPerPage || 0))
+  const { logout } = useAuth()
   const {
     data: resPlansData,
     isLoading,
   } = useGetPlans()
-  const navigate = useNavigate()
-
-  const isMobile = useMediaQuery({ maxWidth: 1000 });
-  const cardsPerPage = isMobile ? 1 : plansUser?.length;
-  const totalPages = Math.ceil((plansUser?.length || 0) / (cardsPerPage || 0));
 
   useEffect(() => {
     if (resPlansData && user?.birthDay) {
