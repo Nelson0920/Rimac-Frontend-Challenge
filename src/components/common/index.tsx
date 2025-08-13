@@ -7,6 +7,7 @@ import Input from "./input"
 import { Modal } from "./modal"
 import { Navbar } from "./navbar"
 import Select from "./select"
+import BackButton from "./backButton"
 
 export {
   Button,
@@ -18,4 +19,5 @@ export {
   Modal,
   Navbar,
   Select,
+  BackButton,
 }
