@@ -22,17 +22,20 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState<TUser>();
   const [plansUser, setPlansUser] = useState<Plan[]>();
-  const isMobile = useMediaQuery({ maxWidth: 1000 });
   const { data: resPlansData } = useGetPlans();
   const [page, setPage] = useState(0);
   const [progressBar, setProgressBar] = useState(1);
+  
+  const isMobile = useMediaQuery({ maxWidth: 1000 });
   const cardsPerPage = isMobile ? 1 : plansUser?.length;
   const totalPages = Math.ceil((plansUser?.length || 0) / (cardsPerPage || 0));
 
   useEffect(() => {
     if (resPlansData && user?.birthDay) {
       const userAge = getAgeFromBirthDay(user.birthDay);
-      const filtered = resPlansData?.list?.filter((plan) => plan.age >= userAge);
+      const filtered = resPlansData?.list?.filter(
+        (plan) => plan.age >= userAge
+      );
       setPlansUser(filtered);
     }
   }, [resPlansData, user]);
@@ -80,9 +83,13 @@ export default function Home() {
         />
       }
     >
-      {!isMobile && <BackButton />}
+      {!isMobile && (
+        <div className="ml-26">
+          <BackButton />
+        </div>
+      )}
 
-      <div className="flex flex-col items-center justify-center mt-14 w-full">
+      <div className="flex flex-col items-center justify-center mt-14 w-full mb-5">
         {progressBar === 1 ? (
           <>
             <div className={`mb-8 text-center`}>
@@ -110,7 +117,7 @@ export default function Home() {
               </div>
             </div>
 
-            <div className="flex flex-col md:flex-row flex-nowrap gap-8 mb-[20px]">
+            <div className="flex flex-col md:flex-row flex-nowrap gap-8 mb-5">
               <CardSelectPlan
                 option={1}
                 selectedOption={selectedOption}
