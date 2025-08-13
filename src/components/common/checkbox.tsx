@@ -21,6 +21,7 @@ interface CheckboxProps {
 
 interface CheckboxLabelProps {
   children?: ReactNode
+  className?: string
 }
 
 const Checkbox = ({ children, checked: controlledChecked, onChange }: CheckboxProps) => {
@@ -50,12 +51,12 @@ const Checkbox = ({ children, checked: controlledChecked, onChange }: CheckboxPr
   )
 }
 
-const CheckboxLabel = ({ children }: CheckboxLabelProps) => {
+const CheckboxLabel = ({ children, className }: CheckboxLabelProps) => {
   const { checked, setChecked} = useCheckboxContext()
 
   return (
     <label
-      className={`flex items-center cursor-pointer select-none text-gray-999`}
+      className={`flex items-center cursor-pointer select-none text-grey100 ${className}`}
       onClick={() => setChecked(!checked)}
     >
       <div
