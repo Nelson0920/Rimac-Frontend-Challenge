@@ -66,8 +66,6 @@ export default function Login() {
     }
   }, [dataUser])
 
-  console.log(dataUser)
-
   const handleDocumentInputChange = (value: string) => {
     const filtered = value.replace(/\D/g, '').slice(0, 8)
     setDocument(filtered)
@@ -112,7 +110,6 @@ export default function Login() {
       return false
     } else {
       if (phone === user?.phoneNumber && document === user.dniNumber) {
-        // console.log(user)
         const Token = Base64.encode(JSON.stringify(user))
         login(Token)
         navigate(SYSTEM_ROUTES.home)
