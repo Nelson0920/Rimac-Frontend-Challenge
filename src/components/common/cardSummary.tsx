@@ -1,6 +1,6 @@
 import { useMediaQuery } from "react-responsive";
 import { type ReactNode } from "react";
-import { Loader } from "./"
+import { Loader } from "./";
 
 type TProps = {
   children: ReactNode;

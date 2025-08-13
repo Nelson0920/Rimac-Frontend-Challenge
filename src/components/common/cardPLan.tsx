@@ -21,7 +21,7 @@ const CardPlan: React.FC<TProps> = ({
   const { description, name, price } = plan;
 
   return (
-    <div className="mt-5 w-full flex flex-wrap items-start gap-8 relative">
+    <div className="mt-5 flex flex-wrap items-start gap-8 relative">
       <div
         className="relative w-[288px] h-[680px] px-8 pt-16 pb-[26px] bg-white shadow-[0px_1px_32px_rgba(174,172,243,0.35)] rounded-[24px] flex flex-col"
         style={{ pointerEvents: loading ? "none" : "auto" }}

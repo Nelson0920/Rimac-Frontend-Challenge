@@ -1,12 +1,13 @@
-import Button from './button'
-import CardPlan from './cardPLan'
-import CardSelectPlan from './cardSelectPlan'
-import ProgressBar from './progressBar'
-import Checkbox from './checkbox'
-import Input from './input'
-import { Modal } from './modal'
-import { Navbar } from './navbar'
-import Select from './select'
+import Button from "./button"
+import CardPlan from "./cardPLan"
+import CardSelectPlan from "./cardSelectPlan"
+import ProgressBar from "./progressBar"
+import Checkbox from "./checkbox"
+import Input from "./input"
+import { Modal } from "./modal"
+import { Navbar } from "./navbar"
+import Select from "./select"
+import BackButton from "./backButton"
 import { Loader } from './loader'
 
 export {
@@ -19,5 +20,6 @@ export {
   Modal,
   Navbar,
   Select,
+  BackButton,
   Loader,
 }

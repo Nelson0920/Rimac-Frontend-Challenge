@@ -1,5 +1,6 @@
 import React from "react";
 import { useMediaQuery } from "react-responsive";
+import BackButton from "./backButton";
 
 interface ProgressBarProps {
   currentStep: number;
@@ -12,7 +13,7 @@ const ProgressBar: React.FC<ProgressBarProps> = ({
   totalSteps,
   stepLabels,
 }) => {
-  const isMobile = useMediaQuery({ maxWidth: 640 });
+  const isMobile = useMediaQuery({ maxWidth: 768 });
 
   if (stepLabels.length !== totalSteps) {
     console.warn(
@@ -29,11 +30,15 @@ const ProgressBar: React.FC<ProgressBarProps> = ({
     );
 
     return (
-      <div className="flex items-center gap-4 w-full max-w-xl mx-auto px-4 h-18 mb-10 border-b-2 border-lightBlueGray">
-        <div className="text-darkBlue1 font-extrabold whitespace-nowrap">
-          PASO {currentStep} DE {totalSteps}
+      <div className="flex items-center gap-4 px-4 h-18 mb-10 border-b-2 border-lightBlueGray w-full  mx-auto">
+        {isMobile && <BackButton />}
+        <div className="text-darkBlue1 font-extrabold whitespace-nowrap flex-shrink-0">
+          <p className="text-[13px]">
+            PASO {currentStep} DE {totalSteps}
+          </p>
         </div>
-        <div className="flex-1 h-2 bg-lightBlueGray rounded-full overflow-hidden">
+
+        <div className="flex-grow h-2 bg-lightBlueGray mr-8 rounded-full overflow-hidden min-w-0">
           <div
             className="h-2 bg-blue rounded-full transition-all duration-300"
             style={{ width: `${progressPercentMobile}%` }}
@@ -44,7 +49,7 @@ const ProgressBar: React.FC<ProgressBarProps> = ({
   }
 
   return (
-    <div className="w-full h-18 flex items-center justify-center gap-4 bg-lightGrayWhite select-none">
+    <div className="w-full h-18 flex items-center justify-center gap-4 bg-lightGrayWhite select-none mb-10">
       {Array.from({ length: totalSteps }).map((_, i) => {
         const stepIndex = i + 1;
         const isCurrent = stepIndex === currentStep;
