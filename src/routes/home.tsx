@@ -73,15 +73,18 @@ export default function Home() {
   )
 
   return (
-    <Default>
-      <ProgressBar
-        currentStep={2}
-        totalSteps={2}
-        stepLabels={['Planes y coberturas', 'Resumen']}
-      />
+    <Default
+      withAdditional={
+        <ProgressBar
+          currentStep={2}
+          totalSteps={2}
+          stepLabels={['Planes y coberturas', 'Resumen']}
+        />
+      }
+    >
       {!isMobile && <BackButton />}
 
-      <div className='flex flex-col items-center justify-center mt-14'>
+      <div className='flex flex-col items-center justify-center mt-14 w-full'>
         <div className={`mb-8 text-center`}>
           <div className={`w-full flex justify-center`}>
             <div
