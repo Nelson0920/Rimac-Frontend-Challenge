@@ -1,36 +1,37 @@
-import { useEffect, useState } from "react";
-import { Default } from "../components/layout";
-import { useNavigate } from "react-router-dom";
-import { Button, Input } from "../components/common";
-import CardSummary from '../components/common/cardSummary'
-import BackButton from '../components/common/backButton'
-
-import "../styles/components/loginPage.scss";
-import { useAuth } from "../context/auth/AuthContext";
+import { useState } from 'react'
+import { Default } from '../components/layout'
+import { useNavigate } from 'react-router-dom'
+import { Button, Checkbox, Input, Modal, Select } from '../components/common'
+import '../styles/components/loginPage.scss'
+import { useAuth } from '../context/auth/AuthContext'
 
 export default function Login() {
-  const [phone, setPhone] = useState("");
-  const { login } = useAuth();
-  const navigate = useNavigate();
+  const [phone, setPhone] = useState('')
+  const [document, setDocument] = useState('')
+  const [privacyPolicyAccepted, setPrivacyPolicyAccepted] = useState(false)
+  const [commsPolicyAccepted, setCommsPolicyAccepted] = useState(false)
+  const { login } = useAuth()
+  const navigate = useNavigate()
+  const [isOpen, setIsOpen] = useState(false)
 
-  const handleInputChange = (value: string) => {
+  const handleDocumentInputChange = (value: string) => {
+    setDocument(value)
+  }
+
+  const handlePhoneInputChange = (value: string) => {
     setPhone(value)
-    console.log('Telefono:', value)
   }
 
   const handleSubmit = () => {
-    const Token = "token123456";
+    if (!privacyPolicyAccepted || !commsPolicyAccepted) {
+      alert('Debes aceptar las Políticas de Privacidad')
+      return
+    }
 
-    login(Token);
-    navigate("/home");
-  };
-
-  const [loading, setLoading] = useState(true)
-  
-    useEffect(() => {
-      const timer = setTimeout(() => setLoading(false), 4000)
-      return () => clearTimeout(timer)
-    }, [])
+    const Token = 'token123456'
+    login(Token)
+    navigate('/home')
+  }
 
   return (
     <Default withFooter>
@@ -39,43 +40,103 @@ export default function Login() {
           <div className={`w-1/2 h-full circleLeft`} />
           <div className={`w-1/2 h-full circleRight`} />
         </div>
-        <BackButton />
-        <CardSummary loading={loading}>
-          <CardSummary.Title>
-            <h3 className='text-xs font-bold'>PRECIOS CALCULADOS PARA:</h3>
-            <div className='flex flex-row space-x-2'>
 
-            <img src='/icons/Iconfamily.svg' alt='Logo' className='h-6 w-auto' />
-            <p>EXAMPLE</p>
+        <div className='grid grid-cols-2 w-full py-4 mx-auto'>
+          <div className='flex w-full items-center justify-center'>
+
+          <img src='/images/portada-login-desktop.webp' alt='' className='rounded-2xl'/>
+          </div>
+          <div className='flex flex-col w-full p-4 max-w-md mx-auto space-y-4'>
+            <span className='bg-gradient-to-r from-cyan-300 to-green-400 font-bold min-w-0 max-w-min text-nowrap rounded px-2'>
+              Seguro Salud Flexible
+            </span>
+            <h2 className='text-4xl font-bold'>Creado para ti y tu familia</h2>
+            <p className='font-semibold'>
+              Tú eliges cuánto pagar. Ingresa tus datos, cotiza y recibe nuestra
+              asesoría. 100% online.
+            </p>
+            <div className='flex flex-row'>
+              <div className='w-1/4'>
+                <Select placeholder='Doc.'>
+                  <Select.Label />
+                  <Select.Trigger />
+                  <Select.Options>
+                    <Select.Option value='dni'>DNI</Select.Option>
+                    <Select.Option value='ruc'>RUC</Select.Option>
+                  </Select.Options>
+                </Select>
+              </div>
+              <div className='w-3/4'>
+                <Input
+                  type='tel'
+                  placeholder='Nro. del documento'
+                  value={document}
+                  onChange={handleDocumentInputChange}
+                >
+                  <Input.Label />
+                  <Input.Field pattern='[0-9]{7,12}' />
+                </Input>
+              </div>
             </div>
-          </CardSummary.Title>
-          <CardSummary.Divider />
-          <CardSummary.Description>
-            <div className='flex flex-col'>
-              <h3 className='text-sm font-bold'>Responsable de pago</h3>
-              <p>{'DNI:'}</p>
-              <p>{'Celular:'}</p>
-              <h3 className='text-sm font-bold'>PLan elegido</h3>
-              <p>{'Plan en Casa y Clinica:'}</p>
-              <p>{'Costo del Plan:'}</p>
+            <Input
+              type='tel'
+              placeholder='Celular'
+              value={phone}
+              onChange={handlePhoneInputChange}
+            >
+              <Input.Label />
+              <Input.Field pattern='[0-9]{7,12}' />
+            </Input>
+            <Checkbox
+              checked={privacyPolicyAccepted}
+              onChange={setPrivacyPolicyAccepted}
+            >
+              <Checkbox.Label>Acepto la Política de Privacidad</Checkbox.Label>
+              <Checkbox.Field />
+            </Checkbox>
+            <Checkbox
+              checked={commsPolicyAccepted}
+              onChange={setCommsPolicyAccepted}
+            >
+              <Checkbox.Label>
+                Acepto la Política de Comunicaciones Comerciales
+              </Checkbox.Label>
+              <Checkbox.Field />
+            </Checkbox>
+            <div>
+              <button
+                onClick={() => setIsOpen(true)}
+                className='underline text-sm font-bold'
+              >
+                Aplican Términos y Condiciones.
+              </button>
             </div>
-          </CardSummary.Description>
-        </CardSummary>
-
-        <div className='relative w-full p-4 max-w-md mx-auto'>
-          <Button label="Cotiza aquí" onClick={() => handleSubmit()} />
-
-          <Input
-            type='tel'
-            placeholder='Celular'
-            value={phone}
-            onChange={handleInputChange}
-          >
-            <Input.Label />
-            <Input.Field pattern='[0-9]{7,12}' />
-          </Input>
-
-          <p className='mt-4 text-white'>Telefono: {phone}</p>
+            <Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>
+              <Modal.Header onClose={() => setIsOpen(false)}>
+                <h2 className='text-center font-bold'>Aplican Términos y Condiciones</h2>
+              </Modal.Header>
+              <Modal.Body>
+                <div className='space-y-4'>
+                  <p>
+                    Encontrarás información importante sobre tus derechos y
+                    obligaciones al utilizar nuestros servicios. Cubren aspectos
+                    clave como la privacidad, la seguridad y la conducta
+                    esperada. Te recomendamos encarecidamente familiarizarte con
+                    estos términos para estar bien informado.
+                  </p>
+                  <p>
+                    Si tienes preguntas o inquietudes sobre los 'Términos y
+                    Condiciones', no dudes en ponerte en contacto con nuestro
+                    equipo de soporte. Estamos aquí para ayudarte y garantizar
+                    que tu experiencia sea transparente y segura.
+                  </p>
+                </div>
+              </Modal.Body>
+            </Modal>
+            <div>
+              <Button label='Cotiza aquí' onClick={handleSubmit} />
+            </div>
+          </div>
         </div>
       </div>
     </Default>

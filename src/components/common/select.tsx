@@ -77,7 +77,7 @@ const SelectLabel = () => {
   return (
     <label
       className={`absolute left-4 transition-all duration-200 ${
-        isFloating ? "text-xs top-1 text-gray-999" : "top-4 text-slateBlue"
+        isFloating ? "text-xs top-1 text-greyborder-grey100" : "top-4 text-slateBlue"
       }`}
     >
       {placeholder}
@@ -91,7 +91,7 @@ const SelectTrigger = () => {
   return (
     <button
       type="button"
-      className="w-full px-4 h-full bg-transparent outline-none rounded-md border border-slateBlue focus:text-gray-999 focus:border-gray-999 focus:border-2 focus:px-[15px] text-left pt-4"
+      className="w-full px-4 h-full bg-transparent outline-none rounded-md border border-slateBlue focus:text-greyborder-grey100 focus:border-grey100 focus:border-2 focus:px-[15px] text-left pt-4 flex items-center justify-between"
       onClick={() => {
         setIsOpen(!isOpen)
         setIsFocused(!isOpen)
@@ -101,7 +101,16 @@ const SelectTrigger = () => {
         setTimeout(() => setIsOpen(false), 200)
       }}
     >
-      {value}
+      <span className='uppercase'>{value}</span>
+      <svg 
+        className={`w-5 h-auto text-grey100 transition-transform duration-200 ${isOpen ? 'transform rotate-180' : ''}`}
+        fill="none" 
+        stroke="currentColor" 
+        viewBox="0 0 24 24" 
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+      </svg>
     </button>
   )
 }
