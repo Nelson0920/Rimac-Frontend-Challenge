@@ -6,6 +6,7 @@ import '../styles/components/loginPage.scss'
 import { useAuth } from '../context/auth/authContext'
 import { useGetUser } from '../lib/api/routes/user'
 import { useGetPlans } from '../lib/api/routes/plan'
+import { useMediaQuery } from "react-responsive"
 
 export default function Login() {
   const [phone, setPhone] = useState('')
@@ -15,6 +16,9 @@ export default function Login() {
   const { login } = useAuth()
   const navigate = useNavigate()
   const [isOpen, setIsOpen] = useState(false)
+  const isMobile = useMediaQuery({ maxWidth: 768 })
+
+  console.log(isMobile)
 
   const { data: dataUSer } = useGetUser()
   const { data: dataPlans } = useGetPlans()
@@ -41,28 +45,65 @@ export default function Login() {
 
   return (
     <Default withFooter>
-      <div>
+      <div className='w-full h-full flex items-center justify-center'>
         <div className='absolute inset-0 -z-10 flex containerBackground'>
           <div className={`w-1/2 h-full circleLeft`} />
           <div className={`w-1/2 h-full circleRight`} />
         </div>
 
-        <div className='grid grid-cols-2 w-full py-4 mx-auto'>
-          <div className='flex w-full items-center justify-center'>
+        <div className={`${isMobile
+          ? 'flex flex-col'
+          : 'grid grid-cols-2 w-full py-4 mx-auto'
+        }`}>
+          {
+            !isMobile
+              &&
+            <div className='flex w-full items-center justify-center'>
+              <img src='/images/portada-login-desktop.webp' alt='' className='rounded-2xl'/>
+            </div>
+          }
 
-          <img src='/images/portada-login-desktop.webp' alt='' className='rounded-2xl'/>
-          </div>
           <div className='flex flex-col w-full p-4 max-w-md mx-auto space-y-4'>
-            <span className='bg-gradient-to-r from-cyan-300 to-green-400 font-bold min-w-0 max-w-min text-nowrap rounded px-2'>
-              Seguro Salud Flexible
-            </span>
-            <h2 className='text-4xl font-bold'>Creado para ti y tu familia</h2>
-            <p className='font-semibold'>
-              Tú eliges cuánto pagar. Ingresa tus datos, cotiza y recibe nuestra
-              asesoría. 100% online.
-            </p>
-            <div className='flex flex-row'>
-              <div className='w-1/2'>
+            {
+              isMobile
+                &&
+              <>
+                <div className='flex items-center justify-between gap-8'>
+                  <div className='w-[50%]'>
+                    <span className='bg-gradient-to-r from-cyan-300 to-green-400 font-bold min-w-0 max-w-min text-nowrap rounded px-2'>
+                      Seguro Salud Flexible
+                    </span>
+                    <h2 className='text-2xl font-bold'>Creado para ti y tu familia</h2>
+                  </div>
+                  <div className='w-[50%] h-[10rem]'>
+                    <img src='/images/portada-login-desktop.webp' alt='' className='rounded-2xl w-full h-full object-contain'/>
+                  </div>
+                </div>
+                <div className="w-full border-[1px] border-gray-softened my-4" />
+                <p className='font-semibold'>
+                  Tú eliges cuánto pagar. Ingresa tus datos, cotiza y recibe nuestra
+                  asesoría. 100% online.
+                </p>
+              </>
+            }
+
+            {
+              !isMobile
+                &&
+              <>
+                <span className='bg-gradient-to-r from-cyan-300 to-green-400 font-bold min-w-0 max-w-min text-nowrap rounded px-2'>
+                  Seguro Salud Flexible
+                </span>
+                <h2 className='text-4xl font-bold'>Creado para ti y tu familia</h2>
+                <p className='font-semibold'>
+                  Tú eliges cuánto pagar. Ingresa tus datos, cotiza y recibe nuestra
+                  asesoría. 100% online.
+                </p>
+              </>
+            }
+
+            <div className='w-full flex flex-row'>
+              <div className='w-[40%]'>
                 <Select
                   placeholder='DNI'
                   rounded='left'
@@ -75,7 +116,7 @@ export default function Login() {
                   </Select.Options>
                 </Select>
               </div>
-              <div className='w-1/2'>
+              <div className='w-[60%]'>
                 <Input
                   type='tel'
                   placeholder='Nro. del documento'
@@ -144,9 +185,7 @@ export default function Login() {
                 </div>
               </Modal.Body>
             </Modal>
-            <div>
-              <Button label='Cotiza aquí' onClick={handleSubmit} />
-            </div>
+            <Button label='Cotiza aquí' onClick={handleSubmit} />
           </div>
         </div>
       </div>

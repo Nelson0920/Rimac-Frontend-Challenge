@@ -32,6 +32,12 @@ type SelectProps = {
   onChange?: (val: string) => void
 }
 
+const radius = {
+  full: { borderRadius: '6px' },
+  left: { borderTopLeftRadius: '6px', borderBottomLeftRadius: '6px', borderTopRightRadius: '0px', borderBottomRightRadius: '0px' },
+  right: { borderTopRightRadius: '6px', borderBottomRightRadius: '6px', borderTopLeftRadius: '0px', borderBottomLeftRadius: '0px' }
+}
+
 const Select = ({
   children,
   placeholder,
@@ -67,7 +73,10 @@ const Select = ({
         rounded,
       }}
     >
-      <div className="relative w-full h-[56px]">
+      <div
+        className="relative w-full h-[56px] bg-white"
+        style={ radius[rounded] }
+      >
         {children}
       </div>
     </SelectContext.Provider>
@@ -97,12 +106,6 @@ const SelectTrigger = () => {
     setIsFocused,
     rounded,
   } = useSelectContext()
-
-  const radius = {
-    full: { borderRadius: '6px' },
-    left: { borderTopLeftRadius: '6px', borderBottomLeftRadius: '6px', borderTopRightRadius: '0px', borderBottomRightRadius: '0px' },
-    right: { borderTopRightRadius: '6px', borderBottomRightRadius: '6px', borderTopLeftRadius: '0px', borderBottomLeftRadius: '0px' }
-  }
   
   return (
     <button

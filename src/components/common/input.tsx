@@ -33,6 +33,12 @@ type InputProps = {
   onChange?: (val: string) => void
 }
 
+const radius = {
+  full: { borderRadius: '6px' },
+  left: { borderTopLeftRadius: '6px', borderBottomLeftRadius: '6px', borderTopRightRadius: '0px', borderBottomRightRadius: '0px' },
+  right: { borderTopRightRadius: '6px', borderBottomRightRadius: '6px', borderTopLeftRadius: '0px', borderBottomLeftRadius: '0px' }
+}
+
 const Input = ({
   children,
   placeholder,
@@ -66,7 +72,10 @@ const Input = ({
         rounded,
       }}
     >
-      <div className="relative w-full h-[56px]">
+      <div
+        className="relative w-full h-[56px] bg-white"
+        style={ radius[rounded] }
+      >
         {children}
       </div>
     </InputContext.Provider>
@@ -74,14 +83,16 @@ const Input = ({
 }
 
 const Label = () => {
-  const { isFocused, value, placeholder } = useInputContext()
+  const { isFocused, value, placeholder, setIsFocused } = useInputContext()
   const isFloating = isFocused || value.length > 0
 
   return (
     <label
-      className={`absolute left-4 transition-all duration-200 ${
+      className={`absolute left-4 transition-all duration-200 w-auto truncate ${
         isFloating ? "text-xs top-1 text-gray-999" : "top-4 text-gray-softened"
       }`}
+      onClick={() => setIsFocused(true)}
+      onBlur={() => setIsFocused(false)}
     >
       {placeholder}
     </label>
@@ -96,12 +107,6 @@ const Field = (props: InputHTMLAttributes<HTMLInputElement>) => {
     type,
     rounded,
   } = useInputContext()
-
-  const radius = {
-    full: { borderRadius: '6px' },
-    left: { borderTopLeftRadius: '6px', borderBottomLeftRadius: '6px', borderTopRightRadius: '0px', borderBottomRightRadius: '0px' },
-    right: { borderTopRightRadius: '6px', borderBottomRightRadius: '6px', borderTopLeftRadius: '0px', borderBottomLeftRadius: '0px' }
-  }
 
   return (
     <input

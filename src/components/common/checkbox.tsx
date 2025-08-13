@@ -74,7 +74,7 @@ const CheckboxLabel = ({ children }: CheckboxLabelProps) => {
           </svg>
         )}
       </div>
-      <span>{children}</span>
+      <span className='text-[.75rem]'>{children}</span>
     </label>
   )
 }
@@ -88,7 +88,7 @@ const CheckboxField = ({ ...props }: React.HTMLAttributes<HTMLInputElement>) => 
       type="checkbox"
       checked={checked}
       onChange={(e) => setChecked(e.target.checked)}
-      className="sr-only"
+      className="sr-only w-6 h-6"
       {...props}
     />
   )

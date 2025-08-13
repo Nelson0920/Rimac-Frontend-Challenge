@@ -1,9 +1,12 @@
 import { useState } from 'react'
 import { Navbar as Nav } from '../common'
 import { Modal } from '../common'
+import { useMediaQuery } from "react-responsive"
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
+  const isMobile = useMediaQuery({ maxWidth: 768 })
+
   return (
     <Nav
       brand={<Nav.Brand />}
@@ -11,12 +14,16 @@ export function Navbar() {
         <div className='flex items-center'>
           <Nav.Item>
             <>
-              <button
-                onClick={() => setIsOpen(true)}
-                className='btn-open-modal hover:underline'
-              >
-                ¡Compra por este medio!
-              </button>
+              {
+                !isMobile
+                  &&
+                <button
+                  onClick={() => setIsOpen(true)}
+                  className='btn-open-modal hover:underline'
+                >
+                  ¡Compra por este medio!
+                </button>
+              }
               <Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>
                 <Modal.Header onClose={() => setIsOpen(false)}>
                   <h2 className='text-center'>Compra por este medio</h2>
