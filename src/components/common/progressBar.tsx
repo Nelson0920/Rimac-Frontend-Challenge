@@ -30,7 +30,7 @@ const ProgressBar: React.FC<ProgressBarProps> = ({
     );
 
     return (
-      <div className="flex items-center gap-4 px-4 h-18 mb-10 border-b-2 border-lightBlueGray w-full  mx-auto">
+      <div className="flex items-center gap-4 px-4 h-18 border-b-2 border-lightBlueGray w-full mx-auto">
         {isMobile && <BackButton />}
         <div className="text-darkBlue1 font-extrabold whitespace-nowrap flex-shrink-0">
           <p className="text-[13px]">
@@ -49,7 +49,7 @@ const ProgressBar: React.FC<ProgressBarProps> = ({
   }
 
   return (
-    <div className="w-full h-18 flex items-center justify-center gap-4 bg-lightGrayWhite select-none mb-10">
+    <div className="w-full h-18 flex items-center justify-center gap-4 bg-lightGrayWhite select-none">
       {Array.from({ length: totalSteps }).map((_, i) => {
         const stepIndex = i + 1;
         const isCurrent = stepIndex === currentStep;
