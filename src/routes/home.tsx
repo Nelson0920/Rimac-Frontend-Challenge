@@ -5,13 +5,14 @@ import { useMediaQuery } from 'react-responsive'
 import { useGetPlans } from '../lib/api/routes/plan'
 import { type User, type Plan } from '../lib/types/types'
 import Cookies from 'js-cookie'
-
+import { useNavigate } from 'react-router-dom'
 import IconProtectionLight from '/icons/IconProtectionLight.svg'
 import IconAddUserLight from '/icons/iconAddUserLight.svg'
 import BackButton from '../components/common/backButton'
 import CardSummary from '../components/common/cardSummary'
 import { base64ToUtf8, getAgeFromBirthDay } from '../lib/util/functions'
 import { useAuth } from '../context/auth/authContext'
+import { SYSTEM_ROUTES } from '../lib/api/cache'
 
 interface TUser extends User {
   phoneNumber: string
@@ -24,6 +25,7 @@ export default function Home() {
   const [user, setUser] = useState<TUser>()
   const [plansUser, setPlansUser] = useState<Plan[]>()
   const isMobile = useMediaQuery({ maxWidth: 1000 })
+  const navigate = useNavigate()
   const [page, setPage] = useState(0)
   const [progressBar, setProgressBar] = useState(1)
   const cardsPerPage = isMobile ? 1 : plansUser?.length
@@ -96,6 +98,7 @@ export default function Home() {
               setProgressBar(1)
             } else {
               logout()
+              navigate(SYSTEM_ROUTES.login)
             }
           }}
         />
