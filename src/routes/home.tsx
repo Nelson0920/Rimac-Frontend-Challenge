@@ -32,7 +32,7 @@ export default function Home() {
   useEffect(() => {
     if (resPlansData && user?.birthDay) {
       const userAge = getAgeFromBirthDay(user.birthDay);
-      const filtered = resPlansData.list.filter((plan) => plan.age >= userAge);
+      const filtered = resPlansData?.list?.filter((plan) => plan.age >= userAge);
       setPlansUser(filtered);
     }
   }, [resPlansData, user]);
