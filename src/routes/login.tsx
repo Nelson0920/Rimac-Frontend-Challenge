@@ -1,13 +1,14 @@
 import { useState, useEffect } from 'react'
 import { Default } from '../components/layout'
 import { useNavigate } from 'react-router-dom'
-import { Button, Checkbox, Input, Modal, Select } from '../components/common'
+import { Button, Checkbox, Input, Modal, Select, Loader } from '../components/common'
 import '../styles/components/loginPage.scss'
 import { useAuth } from '../context/auth/authContext'
 import { useGetUser } from '../lib/api/routes/user'
 import { useMediaQuery } from 'react-responsive'
 import { Base64 } from 'js-base64'
 import { type User } from '../lib/types/types'
+import { SYSTEM_ROUTES } from '../lib/api/cache'
 
 interface UserT extends User {
   phoneNumber: string
@@ -15,7 +16,7 @@ interface UserT extends User {
 }
 
 export default function Login() {
-  const { data } = useGetUser()
+  const { data: dataUser, isLoading, refetch } = useGetUser()
 
   const [user, setUser] = useState<UserT>()
   const [phone, setPhone] = useState('')
@@ -53,13 +54,19 @@ export default function Login() {
   }
 
   useEffect(() => {
-    if (data)
-      setUser({
-        ...data,
-        dniNumber: '12345678',
-        phoneNumber: '123456789',
-      })
-  }, [data])
+    if (dataUser) {
+      if (!dataUser?.name) refetch()
+      else {
+        setUser({
+          ...dataUser,
+          dniNumber: '12345678',
+          phoneNumber: '123456789',
+        })
+      }
+    }
+  }, [dataUser])
+
+  console.log(dataUser)
 
   const handleDocumentInputChange = (value: string) => {
     const filtered = value.replace(/\D/g, '').slice(0, 8)
@@ -105,13 +112,18 @@ export default function Login() {
       return false
     } else {
       if (phone === user?.phoneNumber && document === user.dniNumber) {
+        // console.log(user)
         const Token = Base64.encode(JSON.stringify(user))
         login(Token)
-        navigate('/home')
+        navigate(SYSTEM_ROUTES.home)
       } else {
         alert('credenciales erroneas')
       }
     }
+  }
+
+  if (isLoading) {
+    return <Loader />
   }
 
   return (

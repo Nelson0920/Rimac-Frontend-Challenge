@@ -1,17 +1,18 @@
-import { useEffect, useState } from "react";
-import { CardPlan, CardSelectPlan, ProgressBar } from "../components/common";
-import { Default } from "../components/layout";
-import { useMediaQuery } from "react-responsive";
-import { useGetPlans } from "../lib/api/routes/plan";
-import { type User, type Plan } from "../lib/types/types";
-import Cookies from "js-cookie";
-
-import IconProtectionLight from "/icons/IconProtectionLight.svg";
-import IconAddUserLight from "/icons/iconAddUserLight.svg";
-import BackButton from "../components/common/backButton";
-import CardSummary from "../components/common/cardSummary";
-import { base64ToUtf8, getAgeFromBirthDay } from "../lib/util/functions";
-import { useAuth } from "../context/auth/authContext";
+import { useEffect, useState } from 'react'
+import { CardPlan, CardSelectPlan, ProgressBar, Loader } from '../components/common'
+import { Default } from '../components/layout'
+import { useMediaQuery } from 'react-responsive'
+import { useGetPlans } from '../lib/api/routes/plan'
+import { type User, type Plan } from '../lib/types/types'
+import Cookies from 'js-cookie'
+import { useNavigate } from 'react-router-dom'
+import IconProtectionLight from '/icons/IconProtectionLight.svg'
+import IconAddUserLight from '/icons/iconAddUserLight.svg'
+import BackButton from '../components/common/backButton'
+import CardSummary from '../components/common/cardSummary'
+import { base64ToUtf8, getAgeFromBirthDay } from '../lib/util/functions'
+import { useAuth } from '../context/auth/authContext'
+import { SYSTEM_ROUTES } from '../lib/api/cache'
 
 interface TUser extends User {
   phoneNumber: string;
@@ -23,10 +24,14 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState<TUser>();
   const [plansUser, setPlansUser] = useState<Plan[]>();
-  const { data: resPlansData } = useGetPlans();
   const [page, setPage] = useState(0);
   const [progressBar, setProgressBar] = useState(1);
-  const { logout } = useAuth();
+ const { logout } = useAuth()
+  const {
+    data: resPlansData,
+    isLoading,
+  } = useGetPlans()
+  const navigate = useNavigate()
 
   const isMobile = useMediaQuery({ maxWidth: 1000 });
   const cardsPerPage = isMobile ? 1 : plansUser?.length;
@@ -75,13 +80,27 @@ export default function Home() {
     page * (cardsPerPage || 0) + (cardsPerPage || 0)
   );
 
+  if (isLoading) {
+    return <Loader />
+  }
+
+  const handleBackButton = () => {
+    if (progressBar === 2) {
+      setProgressBar(1)
+      setSelectedOption(0)
+    } else {
+      logout()
+    }
+  }
+
   return (
     <Default
       withAdditional={
         <ProgressBar
           currentStep={progressBar}
           totalSteps={2}
-          stepLabels={["Planes y coberturas", "Resumen"]}
+          stepLabels={['Planes y coberturas', 'Resumen']}
+          backButton={handleBackButton}
         />
       }
     >
@@ -93,6 +112,7 @@ export default function Home() {
                 setProgressBar(1);
               } else {
                 logout();
+                navigate(SYSTEM_ROUTES.login)
               }
             }}
           />
