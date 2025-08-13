@@ -6,12 +6,14 @@ interface ProgressBarProps {
   currentStep: number;
   totalSteps: number;
   stepLabels: string[];
+  backButton: () => void
 }
 
 const ProgressBar: React.FC<ProgressBarProps> = ({
   currentStep,
   totalSteps,
   stepLabels,
+  backButton,
 }) => {
   const isMobile = useMediaQuery({ maxWidth: 768 });
 
@@ -31,7 +33,7 @@ const ProgressBar: React.FC<ProgressBarProps> = ({
 
     return (
       <div className="flex items-center gap-4 px-4 h-18 border-b-2 border-lightBlueGray w-full mx-auto">
-        {isMobile && <BackButton />}
+        {isMobile && <BackButton onClick={backButton} />}
         <div className="text-darkBlue1 font-extrabold whitespace-nowrap flex-shrink-0">
           <p className="text-[13px]">
             PASO {currentStep} DE {totalSteps}
