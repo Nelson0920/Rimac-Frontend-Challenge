@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { CardPlan, CardSelectPlan, ProgressBar } from '../components/common'
+import { CardPlan, CardSelectPlan, ProgressBar, Loader } from '../components/common'
 import { Default } from '../components/layout'
 import { useMediaQuery } from 'react-responsive'
 import { useGetPlans } from '../lib/api/routes/plan'
@@ -24,12 +24,15 @@ export default function Home() {
   const [user, setUser] = useState<TUser>()
   const [plansUser, setPlansUser] = useState<Plan[]>()
   const isMobile = useMediaQuery({ maxWidth: 1000 })
-  const { data: resPlansData } = useGetPlans()
   const [page, setPage] = useState(0)
   const [progressBar, setProgressBar] = useState(1)
   const cardsPerPage = isMobile ? 1 : plansUser?.length
   const totalPages = Math.ceil((plansUser?.length || 0) / (cardsPerPage || 0))
   const { logout } = useAuth()
+  const {
+    data: resPlansData,
+    isLoading,
+  } = useGetPlans()
 
   useEffect(() => {
     if (resPlansData && user?.birthDay) {
@@ -71,6 +74,10 @@ export default function Home() {
     page * (cardsPerPage || 0),
     page * (cardsPerPage || 0) + (cardsPerPage || 0)
   )
+
+  if (isLoading) {
+    return <Loader />
+  }
 
   return (
     <Default

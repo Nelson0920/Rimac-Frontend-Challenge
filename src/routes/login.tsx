@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Default } from '../components/layout'
 import { useNavigate } from 'react-router-dom'
-import { Button, Checkbox, Input, Modal, Select } from '../components/common'
+import { Button, Checkbox, Input, Modal, Select, Loader } from '../components/common'
 import '../styles/components/loginPage.scss'
 import { useAuth } from '../context/auth/authContext'
 import { useGetUser } from '../lib/api/routes/user'
@@ -15,7 +15,7 @@ interface UserT extends User {
 }
 
 export default function Login() {
-  const { data } = useGetUser()
+  const { data, isLoading } = useGetUser()
 
   const [user, setUser] = useState<UserT>()
   const [phone, setPhone] = useState('')
@@ -113,6 +113,10 @@ export default function Login() {
         alert('credenciales erroneas')
       }
     }
+  }
+
+  if (isLoading) {
+    return <Loader />
   }
 
   return (
