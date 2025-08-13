@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { CardPlan, CardSelectPlan, ProgressBar } from "../components/common";
 import { Default } from "../components/layout";
 import { useMediaQuery } from "react-responsive";
@@ -6,18 +6,24 @@ import { useMediaQuery } from "react-responsive";
 import IconProtectionLight from "/icons/IconProtectionLight.svg";
 import IconAddUserLight from "/icons/iconAddUserLight.svg";
 import BackButton from "../components/common/backButton";
+import CardSummary from "../components/common/cardSummary";
 
 export default function Home() {
   const [selectedOption, setSelectedOption] = useState(0);
-
+  const [loading, setLoading] = useState(true)
   const isMobile = useMediaQuery({ maxWidth: 768 });
+
+  useEffect(() => {
+    const timer = setTimeout(() => setLoading(false), 4000)
+    return () => clearTimeout(timer)
+  }, [])
 
   return (
     <Default>
       <ProgressBar
-        currentStep={1}
+        currentStep={2}
         totalSteps={2}
-        stepLabels={["Planes y coberturas", "Resumen"]}
+        stepLabels={['Planes y coberturas', 'Resumen']}
       />
       {!isMobile && <BackButton />}
       
@@ -114,9 +120,34 @@ export default function Home() {
             previous_price={49}
             recommended={true}
             setPlanSelected={(plan) => console.log("Plan seleccionado:", plan)}
+            loading={loading}
           />
         </div>
+        <CardSummary loading={loading}>
+        <CardSummary.Title>
+          <h3 className='text-xs font-bold'>PRECIOS CALCULADOS PARA:</h3>
+          <div className='flex flex-row space-x-2'>
+            <img
+              src='/icons/Iconfamily.svg'
+              alt='Logo'
+              className='h-6 w-auto'
+            />
+            <p>EXAMPLE</p>
+          </div>
+        </CardSummary.Title>
+        <CardSummary.Divider />
+        <CardSummary.Description>
+          <div className='flex flex-col'>
+            <h3 className='text-sm font-bold'>Responsable de pago</h3>
+            <p>{'DNI:'}</p>
+            <p>{'Celular:'}</p>
+            <h3 className='text-sm font-bold'>PLan elegido</h3>
+            <p>{'Plan en Casa y Clinica:'}</p>
+            <p>{'Costo del Plan:'}</p>
+          </div>
+        </CardSummary.Description>
+      </CardSummary>
       </div>
     </Default>
-  );
+  )
 }

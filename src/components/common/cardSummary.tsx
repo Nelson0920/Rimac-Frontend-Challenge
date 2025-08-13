@@ -1,16 +1,17 @@
-import { useMediaQuery } from 'react-responsive'
-import { type ReactNode } from 'react'
+import { useMediaQuery } from "react-responsive";
+import { type ReactNode } from "react";
+import { Loader } from "./";
 
 type TProps = {
-  children: ReactNode
-}
+  children: ReactNode;
+  loading?: boolean;
+};
 
 const CardSummary: React.FC<TProps> & {
-  Title: typeof Title
-  Description: typeof Description
-  Divider: typeof Divider
-} = ({ children }) => {
-
+  Title: typeof Title;
+  Description: typeof Description;
+  Divider: typeof Divider;
+} = ({ children, loading = false }) => {
   return (
     <div
       className={`
@@ -23,48 +24,55 @@ const CardSummary: React.FC<TProps> & {
         max-w-4xl w-full mx-auto
       `}
       style={{
-        padding: '2.5rem 1.5rem',
+        padding: "2.5rem 1.5rem",
+        minHeight: loading ? "250px" : undefined,
       }}
     >
-      {children}
+      {loading ? (
+        <div className="absolute inset-0 flex items-center justify-center bg-white bg-opacity-70 rounded-[1.5rem]">
+          <Loader size={48} />
+        </div>
+      ) : (
+        children
+      )}
     </div>
-  )
-}
+  );
+};
 
 type TitleProps = {
-  children: ReactNode
-}
+  children: ReactNode;
+};
 
 const Title: React.FC<TitleProps> = ({ children }) => {
-  const isMobile = useMediaQuery({ maxWidth: 768 })
+  const isMobile = useMediaQuery({ maxWidth: 768 });
 
   return (
     <div
       className={`flex gap-2 ${
-        isMobile ? 'flex-row items-center' : 'flex-col'
+        isMobile ? "flex-row items-center" : "flex-col"
       }`}
     >
-      <div className='text-darkBlue1 text-xl font-bold leading-7 tracking-[-0.2px]'>
+      <div className="text-darkBlue1 text-xl font-bold leading-7 tracking-[-0.2px]">
         {children}
       </div>
     </div>
-  )
-}
+  );
+};
 
 type DescriptionProps = {
-  children: ReactNode
-}
+  children: ReactNode;
+};
 
 const Description: React.FC<DescriptionProps> = ({ children }) => {
-  return <div className='text-darkBlue1 text-[12px]'>{children}</div>
-}
+  return <div className="text-darkBlue1 text-[12px]">{children}</div>;
+};
 
 const Divider: React.FC = () => {
-  return <div className='border-t border-softGray my-3' />
-}
+  return <div className="border-t border-softGray my-3" />;
+};
 
-CardSummary.Title = Title
-CardSummary.Description = Description
-CardSummary.Divider = Divider
+CardSummary.Title = Title;
+CardSummary.Description = Description;
+CardSummary.Divider = Divider;
 
-export default CardSummary
+export default CardSummary;

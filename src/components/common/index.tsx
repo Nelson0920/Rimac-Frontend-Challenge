@@ -8,6 +8,7 @@ import { Modal } from "./modal"
 import { Navbar } from "./navbar"
 import Select from "./select"
 import BackButton from "./backButton"
+import { Loader } from './loader'
 
 export {
   Button,
@@ -20,4 +21,5 @@ export {
   Navbar,
   Select,
   BackButton,
+  Loader,
 }

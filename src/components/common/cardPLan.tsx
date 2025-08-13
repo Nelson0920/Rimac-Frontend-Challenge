@@ -1,11 +1,14 @@
 import Button from "./button";
 import type { Plan } from "../../lib/types/types";
+import { Loader } from "./"; 
+import React from "react";
 
 interface TProps {
   plan: Plan;
   previous_price?: number;
   recommended?: boolean;
   setPlanSelected: React.Dispatch<React.SetStateAction<Plan | null>>;
+  loading?: boolean;
 }
 
 const CardPlan: React.FC<TProps> = ({
@@ -13,14 +16,22 @@ const CardPlan: React.FC<TProps> = ({
   previous_price,
   recommended = false,
   setPlanSelected,
+  loading = false,
 }) => {
   const { description, name, price } = plan;
 
   return (
-    <div className="mt-5 w-full flex flex-wrap items-start gap-8">
+    <div className="mt-5 w-full flex flex-wrap items-start gap-8 relative">
       <div
         className="relative w-[288px] h-[680px] px-8 pt-16 pb-[26px] bg-white shadow-[0px_1px_32px_rgba(174,172,243,0.35)] rounded-[24px] flex flex-col"
+        style={{ pointerEvents: loading ? "none" : "auto" }}
       >
+        {loading && (
+          <div className="absolute inset-0 bg-white bg-opacity-70 rounded-[24px] flex items-center justify-center z-10">
+            <Loader size={48} />
+          </div>
+        )}
+
         {recommended && (
           <div className="absolute text-xs ml-2 top-8 left-6 bg-mintGreen font-bold px-3 py-1 rounded-[6px]">
             <p>Plan recomendado</p>
@@ -50,7 +61,11 @@ const CardPlan: React.FC<TProps> = ({
                 ${price} al mes
               </span>
             </div>
-            <img src="/public/icons/iconHomeLight.svg" alt="Home icon" className="w-[80px]" />
+            <img
+              src="/public/icons/iconHomeLight.svg"
+              alt="Home icon"
+              className="w-[80px]"
+            />
           </div>
 
           <div
@@ -74,6 +89,7 @@ const CardPlan: React.FC<TProps> = ({
           label="Seleccionar Plan"
           size="small"
           onClick={() => setPlanSelected(plan)}
+          disabled={loading}
         />
       </div>
     </div>

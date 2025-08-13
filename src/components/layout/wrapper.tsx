@@ -1,7 +1,11 @@
 import { BrowserRouter } from "react-router-dom"
+import { AuthProvider } from "../../context/auth/authContext"
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
-type Props = { children: React.ReactNode }
+type Props = { children: React.ReactNode | React.ReactElement }
 type Provider = (p: Props) => React.JSX.Element
+
+const queryClient = new QueryClient()
 
 export const Providers = (...p: Provider[]) =>
   p.reduceRight(
@@ -12,5 +16,7 @@ export const Providers = (...p: Provider[]) =>
 
 export const AppProviders =
   Providers(
-    BrowserRouter,
+    ({ children }) => <BrowserRouter>{children}</BrowserRouter>,
+    ({ children }) => <AuthProvider>{children}</AuthProvider>,
+    ({ children }) => <QueryClientProvider client={ queryClient }>{children}</QueryClientProvider>
   )
