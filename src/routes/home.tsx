@@ -129,16 +129,18 @@ export default function Home() {
         <div className='flex flex-col items-center w-full max-w-6xl'>
           <div className='flex gap-8 justify-center flex-wrap'>
             {visiblePlans.map((plan, index) => (
-              <CardPlan
-                key={index}
-                plan={plan}
-                previous_price={49}
-                recommended={true}
-                setPlanSelected={(plan) =>
-                  console.log('Plan seleccionado:', plan)
-                }
-                loading={loading}
-              />
+              selectedOption != 0 && (
+                <CardPlan
+                  key={index}
+                  plan={plan}
+                  previous_price={49}
+                  recommended={true}
+                  setPlanSelected={(plan) =>
+                    console.log('Plan seleccionado:', plan)
+                  }
+                  loading={loading}
+                />
+              )
             ))}
           </div>
           {isMobile ? (
