@@ -1,5 +1,6 @@
 import Button from "./button";
 import type { Plan } from "../../lib/types/types";
+import IconHomeLight from "/icons/IconHomeLight.svg";
 import { Loader } from "./"; 
 import React from "react";
 
@@ -62,7 +63,7 @@ const CardPlan: React.FC<TProps> = ({
               </span>
             </div>
             <img
-              src="/public/icons/iconHomeLight.svg"
+              src={IconHomeLight}
               alt="Home icon"
               className="w-[80px]"
             />
