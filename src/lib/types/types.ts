@@ -5,7 +5,7 @@ export interface Plan {
   price: number;
 }
 
-export type User = {
+export interface User {
   name: string
   lastName: string
   birthDay: string

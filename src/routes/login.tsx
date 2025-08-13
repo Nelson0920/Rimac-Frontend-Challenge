@@ -1,14 +1,23 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Default } from '../components/layout'
 import { useNavigate } from 'react-router-dom'
 import { Button, Checkbox, Input, Modal, Select } from '../components/common'
 import '../styles/components/loginPage.scss'
 import { useAuth } from '../context/auth/authContext'
 import { useGetUser } from '../lib/api/routes/user'
-import { useGetPlans } from '../lib/api/routes/plan'
 import { useMediaQuery } from "react-responsive"
+import { Base64 } from 'js-base64'
+import { type User } from '../lib/types/types'
+
+interface UserT extends User {
+  phoneNumber: string
+  dniNumber: string
+}
 
 export default function Login() {
+  const { data } = useGetUser()
+
+  const [user, setUser] = useState<UserT>()
   const [phone, setPhone] = useState('')
   const [document, setDocument] = useState('')
   const [privacyPolicyAccepted, setPrivacyPolicyAccepted] = useState(false)
@@ -18,29 +27,35 @@ export default function Login() {
   const [isOpen, setIsOpen] = useState(false)
   const isMobile = useMediaQuery({ maxWidth: 768 })
 
-  console.log(isMobile)
+  useEffect(() => {
+    if (data)
+      setUser({
+        ...data,
+        dniNumber: '123456789',
+        phoneNumber: '123456789',
+      })
+  }, [data])
 
-  const { data: dataUSer } = useGetUser()
-  const { data: dataPlans } = useGetPlans()
-  console.log(dataPlans, dataUSer)
-
-  const handleDocumentInputChange = (value: string) => {
+  const handleDocumentInputChange = (value: string) =>
     setDocument(value)
-  }
 
-  const handlePhoneInputChange = (value: string) => {
+  const handlePhoneInputChange = (value: string) =>
     setPhone(value)
-  }
 
   const handleSubmit = () => {
-    if (!privacyPolicyAccepted || !commsPolicyAccepted) {
-      alert('Debes aceptar las Políticas de Privacidad')
-      return
+    if (!privacyPolicyAccepted || !commsPolicyAccepted || !phone || !document) {
+      alert('Debes aceptar las Políticas de Privacidad y rellenar todos los campos')
+      return false
+    } else {
+      if (phone === user?.phoneNumber && document === user.dniNumber) {
+        const Token = Base64.encode(JSON.stringify(user))
+        console.log(Token)
+        login(Token)
+        navigate('/home')
+      } else {
+        alert('credenciales erroneas')
+      }
     }
-
-    const Token = 'token123456'
-    login(Token)
-    navigate('/home')
   }
 
   return (
@@ -125,7 +140,7 @@ export default function Login() {
                   rounded='right'
                 >
                   <Input.Label />
-                  <Input.Field pattern='[0-9]{7,12}' />
+                  <Input.Field required />
                 </Input>
               </div>
             </div>
@@ -137,7 +152,7 @@ export default function Login() {
               rounded='full'
             >
               <Input.Label />
-              <Input.Field pattern='[0-9]{7,12}' />
+              <Input.Field required />
             </Input>
             <Checkbox
               checked={privacyPolicyAccepted}
