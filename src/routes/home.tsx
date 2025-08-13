@@ -38,8 +38,6 @@ export default function Home() {
   } = useGetPlans()
 
   useEffect(() => {
-    console.log(plansUser, resPlansData, user)
-
     if (resPlansData && user?.birthDay) {
       const userAge = getAgeFromBirthDay(user.birthDay);
       const filtered = resPlansData?.list?.filter(
