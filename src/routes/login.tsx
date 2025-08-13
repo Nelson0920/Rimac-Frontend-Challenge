@@ -4,14 +4,20 @@ import { useNavigate } from "react-router-dom";
 import { Button, Input } from "../components/common";
 import CardSummary from '../components/common/cardSummary'
 import BackButton from '../components/common/backButton'
+import { useGetPlans } from "../lib/api/routes/plan";
+import { useGetUser } from "../lib/api/routes/user";
 
 import "../styles/components/loginPage.scss";
-import { useAuth } from "../context/auth/AuthContext";
+import { useAuth } from "../context/auth/authContext";
 
 export default function Login() {
   const [phone, setPhone] = useState("");
   const { login } = useAuth();
   const navigate = useNavigate();
+
+  const { data: dataUSer } = useGetUser()
+  const { data: dataPlans } = useGetPlans()
+  console.log(dataPlans, dataUSer)
 
   const handleInputChange = (value: string) => {
     setPhone(value)

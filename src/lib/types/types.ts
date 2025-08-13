@@ -4,3 +4,13 @@ export interface Plan {
   name: string;
   price: number;
 }
+
+export type User = {
+  name: string
+  lastName: string
+  birthDay: string
+}
+
+export interface PlansList {
+  list: Plan[]
+}
