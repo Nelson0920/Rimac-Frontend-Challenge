@@ -18,16 +18,18 @@ const Default : React.FC<LayoutProps> = ({
         <Navbar />
       </div>
 
-      {
-        withAdditional
-          &&
-        <div className="w-full">
-          { withAdditional }
-        </div>
-      }
+      <div>
+        {
+          withAdditional
+            &&
+          <div className="w-full h-full max-h-[6rem]">
+            { withAdditional }
+          </div>
+        }
 
-      <div className="max-w-6xl w-full h-full mx-auto">
-        {children}
+        <div className="max-w-6xl w-full h-full mx-auto">
+          {children}
+        </div>
       </div>
 
       <div className="w-full bg-black">
