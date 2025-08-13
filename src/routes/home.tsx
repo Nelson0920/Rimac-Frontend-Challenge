@@ -1,74 +1,76 @@
-import { useEffect, useState } from "react";
-import { CardPlan, CardSelectPlan, ProgressBar } from "../components/common";
-import { Default } from "../components/layout";
-import { useMediaQuery } from "react-responsive";
-import { useGetPlans } from "../lib/api/routes/plan";
-import { type User, type Plan } from "../lib/types/types";
-import Cookies from "js-cookie";
+import { useEffect, useState } from 'react'
+import { CardPlan, CardSelectPlan, ProgressBar } from '../components/common'
+import { Default } from '../components/layout'
+import { useMediaQuery } from 'react-responsive'
+import { useGetPlans } from '../lib/api/routes/plan'
+import { type User, type Plan } from '../lib/types/types'
+import Cookies from 'js-cookie'
 
-import IconProtectionLight from "/icons/IconProtectionLight.svg";
-import IconAddUserLight from "/icons/iconAddUserLight.svg";
-import BackButton from "../components/common/backButton";
-import CardSummary from "../components/common/cardSummary";
-import { base64ToUtf8, getAgeFromBirthDay } from "../lib/util/functions";
+import IconProtectionLight from '/icons/IconProtectionLight.svg'
+import IconAddUserLight from '/icons/iconAddUserLight.svg'
+import BackButton from '../components/common/backButton'
+import CardSummary from '../components/common/cardSummary'
+import { base64ToUtf8, getAgeFromBirthDay } from '../lib/util/functions'
+import { useAuth } from '../context/auth/authContext'
 
 interface TUser extends User {
-  phoneNumber: string;
-  dniNumber: string;
+  phoneNumber: string
+  dniNumber: string
 }
 
 export default function Home() {
-  const [selectedOption, setSelectedOption] = useState(0);
-  const [loading, setLoading] = useState(true);
-  const [user, setUser] = useState<TUser>();
-  const [plansUser, setPlansUser] = useState<Plan[]>();
-  const isMobile = useMediaQuery({ maxWidth: 1000 });
-  const { data: resPlansData } = useGetPlans();
-  const [page, setPage] = useState(0);
-  const [progressBar, setProgressBar] = useState(1);
-  const cardsPerPage = isMobile ? 1 : plansUser?.length;
-  const totalPages = Math.ceil((plansUser?.length || 0) / (cardsPerPage || 0));
+  const [selectedOption, setSelectedOption] = useState(0)
+  const [loading, setLoading] = useState(true)
+  const [user, setUser] = useState<TUser>()
+  const [plansUser, setPlansUser] = useState<Plan[]>()
+  const isMobile = useMediaQuery({ maxWidth: 1000 })
+  const { data: resPlansData } = useGetPlans()
+  const [page, setPage] = useState(0)
+  const [progressBar, setProgressBar] = useState(1)
+  const cardsPerPage = isMobile ? 1 : plansUser?.length
+  const totalPages = Math.ceil((plansUser?.length || 0) / (cardsPerPage || 0))
+  const { logout } = useAuth()
 
   useEffect(() => {
     if (resPlansData && user?.birthDay) {
-      const userAge = getAgeFromBirthDay(user.birthDay);
-      const filtered = resPlansData?.list?.filter((plan) => plan.age >= userAge);
-      setPlansUser(filtered);
+      const userAge = getAgeFromBirthDay(user.birthDay)
+      const filtered = resPlansData?.list?.filter((plan) => plan.age >= userAge)
+      setPlansUser(filtered)
     }
-  }, [resPlansData, user]);
+  }, [resPlansData, user])
 
   useEffect(() => {
-    const token = Cookies.get("token") || "";
-    const resUserData = base64ToUtf8(token);
-    const data = JSON.parse(resUserData);
-    setUser(data);
+    const token = Cookies.get('token') || ''
+    const resUserData = base64ToUtf8(token)
+    const data = JSON.parse(resUserData)
+    setUser(data)
     if (data) {
-      setLoading(false);
+      setLoading(false)
     }
-  }, []);
+  }, [])
 
   const handleSelectPlan = (plan: Plan | null) => {
     if (plan) {
-      setProgressBar(2);
+      setProgressBar(2)
     }
-  };
+  }
 
   useEffect(() => {
-    setPage(0);
-  }, [isMobile]);
+    setPage(0)
+  }, [isMobile])
 
   const handlePrev = () => {
-    setPage((p) => Math.max(p - 1, 0));
-  };
+    setPage((p) => Math.max(p - 1, 0))
+  }
 
   const handleNext = () => {
-    setPage((p) => Math.min(p + 1, totalPages - 1));
-  };
+    setPage((p) => Math.min(p + 1, totalPages - 1))
+  }
 
   const visiblePlans = plansUser?.slice(
     page * (cardsPerPage || 0),
     page * (cardsPerPage || 0) + (cardsPerPage || 0)
-  );
+  )
 
   return (
     <Default
@@ -76,32 +78,42 @@ export default function Home() {
         <ProgressBar
           currentStep={progressBar}
           totalSteps={2}
-          stepLabels={["Planes y coberturas", "Resumen"]}
+          stepLabels={['Planes y coberturas', 'Resumen']}
         />
       }
     >
-      {!isMobile && <BackButton />}
+      {!isMobile && (
+        <BackButton
+          onClick={() => {
+            if (progressBar === 2) {
+              setProgressBar(1)
+            } else {
+              logout()
+            }
+          }}
+        />
+      )}
 
-      <div className="flex flex-col items-center justify-center mt-14 w-full">
+      <div className='flex flex-col items-center justify-center mt-14 w-full'>
         {progressBar === 1 ? (
           <>
             <div className={`mb-8 text-center`}>
               <div className={`w-full flex justify-center`}>
                 <div
                   className={`${
-                    isMobile ? "w-full px-6 text-left" : "w-[544px] text-center"
+                    isMobile ? 'w-full px-6 text-left' : 'w-[544px] text-center'
                   }`}
                 >
                   <h1
                     className={`${
-                      isMobile ? "text-[28px]" : "text-[40px]"
+                      isMobile ? 'text-[28px]' : 'text-[40px]'
                     } font-bold mb-2`}
                   >
                     {user?.name} ¿Para quién deseas cotizar?
                   </h1>
                   <p
                     className={`text-darkBlue1 text-[16px] mb-4 ${
-                      isMobile ? "text-left" : "text-center"
+                      isMobile ? 'text-left' : 'text-center'
                     }`}
                   >
                     Selecciona la opción que se ajuste más a tus necesidades.
@@ -110,27 +122,27 @@ export default function Home() {
               </div>
             </div>
 
-            <div className="flex flex-col md:flex-row flex-nowrap gap-8 mb-[20px]">
+            <div className='flex flex-col md:flex-row flex-nowrap gap-8 mb-[20px]'>
               <CardSelectPlan
                 option={1}
                 selectedOption={selectedOption}
                 onSelect={setSelectedOption}
-                title="Para mi"
-                description="Cotiza tu seguro de salud y agrega familiares si así lo deseas."
+                title='Para mi'
+                description='Cotiza tu seguro de salud y agrega familiares si así lo deseas.'
                 icon={IconProtectionLight}
               />
               <CardSelectPlan
                 option={2}
                 selectedOption={selectedOption}
                 onSelect={setSelectedOption}
-                title="Para alguien más"
-                description="Realiza una cotización para uno de tus familiares o cualquier persona."
+                title='Para alguien más'
+                description='Realiza una cotización para uno de tus familiares o cualquier persona.'
                 icon={IconAddUserLight}
               />
             </div>
 
-            <div className="flex flex-col items-center w-full max-w-6xl">
-              <div className="flex gap-8 justify-center flex-wrap">
+            <div className='flex flex-col items-center w-full max-w-6xl'>
+              <div className='flex gap-8 justify-center flex-wrap'>
                 {visiblePlans?.map(
                   (plan, index) =>
                     selectedOption != 0 && (
@@ -146,26 +158,26 @@ export default function Home() {
                 )}
               </div>
               {isMobile && selectedOption != 0 ? (
-                <div className="mt-6 flex items-center gap-6">
+                <div className='mt-6 flex items-center gap-6'>
                   <button
-                    className="px-4 py-2 rounded  text-blue disabled:text-softGray"
+                    className='px-4 py-2 rounded  text-blue disabled:text-softGray'
                     disabled={page === 0}
                     onClick={handlePrev}
                   >
-                    <span className="flex items-center justify-center pb-1 pe-0.5 rounded-full w-8 h-8 border-3 text-2xl">
-                      {"<"}
+                    <span className='flex items-center justify-center pb-1 pe-0.5 rounded-full w-8 h-8 border-3 text-2xl'>
+                      {'<'}
                     </span>
                   </button>
                   <span>
                     {page + 1} / {totalPages}
                   </span>
                   <button
-                    className="px-4 py-2 rounded text-blue disabled:text-softGray"
+                    className='px-4 py-2 rounded text-blue disabled:text-softGray'
                     disabled={page === totalPages - 1}
                     onClick={handleNext}
                   >
-                    <span className="flex items-center justify-center pb-1 ps-0.5 rounded-full w-8 h-8 border-3 text-2xl">
-                      {">"}
+                    <span className='flex items-center justify-center pb-1 ps-0.5 rounded-full w-8 h-8 border-3 text-2xl'>
+                      {'>'}
                     </span>
                   </button>
                 </div>
@@ -175,12 +187,12 @@ export default function Home() {
         ) : (
           <CardSummary loading={loading}>
             <CardSummary.Title>
-              <h3 className="text-xs font-bold">PRECIOS CALCULADOS PARA:</h3>
-              <div className="flex flex-row space-x-2">
+              <h3 className='text-xs font-bold'>PRECIOS CALCULADOS PARA:</h3>
+              <div className='flex flex-row space-x-2'>
                 <img
-                  src="/icons/Iconfamily.svg"
-                  alt="Logo"
-                  className="h-6 w-auto"
+                  src='/icons/Iconfamily.svg'
+                  alt='Logo'
+                  className='h-6 w-auto'
                 />
                 <p>
                   {user?.name} {user?.lastName}
@@ -189,22 +201,22 @@ export default function Home() {
             </CardSummary.Title>
             <CardSummary.Divider />
             <CardSummary.Description>
-              <div className="flex flex-col">
-                <h3 className="text-sm font-bold">Responsable de pago</h3>
+              <div className='flex flex-col'>
+                <h3 className='text-sm font-bold'>Responsable de pago</h3>
                 <p>
-                  {"DNI:"} {user?.dniNumber}
+                  {'DNI:'} {user?.dniNumber}
                 </p>
                 <p>
-                  {"Celular:"} {user?.phoneNumber}
+                  {'Celular:'} {user?.phoneNumber}
                 </p>
-                <h3 className="text-sm font-bold">PLan elegido</h3>
-                <p>{"Plan en Casa y Clinica:"}</p>
-                <p>{"Costo del Plan:"}</p>
+                <h3 className='text-sm font-bold'>PLan elegido</h3>
+                <p>{'Plan en Casa y Clinica:'}</p>
+                <p>{'Costo del Plan:'}</p>
               </div>
             </CardSummary.Description>
           </CardSummary>
         )}
       </div>
     </Default>
-  );
+  )
 }
