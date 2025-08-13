@@ -24,6 +24,7 @@ export default function Home() {
   const [loading, setLoading] = useState(true)
   const [user, setUser] = useState<TUser>()
   const [plansUser, setPlansUser] = useState<Plan[]>()
+  const [planUser, setPlanUser] = useState<any>()
   const isMobile = useMediaQuery({ maxWidth: 1000 })
   const navigate = useNavigate()
   const [page, setPage] = useState(0)
@@ -59,6 +60,11 @@ export default function Home() {
   const handleSelectPlan = (plan: Plan | null) => {
     if (plan) {
       setProgressBar(2);
+      const discountedPrice = selectedOption === 2 ? plan.price * 0.95 : plan.price;
+
+      console.log({...plan, discountedPrice})
+
+      setPlanUser({...plan, discountedPrice});
     }
   };
 
@@ -211,7 +217,7 @@ export default function Home() {
         ) : (
           <CardSummary loading={loading}>
             <CardSummary.Title>
-              <h3 className="text-xs font-bold">PRECIOS CALCULADOS PARA:</h3>
+              <h3 className="text-xs font-bold mb-2">PRECIOS CALCULADOS PARA:</h3>
               <div className="flex flex-row space-x-2">
                 <img
                   src="/icons/Iconfamily.svg"
@@ -225,7 +231,7 @@ export default function Home() {
             </CardSummary.Title>
             <CardSummary.Divider />
             <CardSummary.Description>
-              <div className="flex flex-col">
+              <div className="flex flex-col gap-2">
                 <h3 className="text-sm font-bold">Responsable de pago</h3>
                 <p>
                   {"DNI:"} {user?.dniNumber}
@@ -233,9 +239,9 @@ export default function Home() {
                 <p>
                   {"Celular:"} {user?.phoneNumber}
                 </p>
-                <h3 className="text-sm font-bold">PLan elegido</h3>
-                <p>{"Plan en Casa y Clinica:"}</p>
-                <p>{"Costo del Plan:"}</p>
+                <h3 className="text-sm font-bold">Plan elegido</h3>
+                <p>{planUser?.name}</p>
+                {"Costo del Plan:"} ${selectedOption == 2 ? planUser?.discountedPrice : planUser?.price} al mes
               </div>
             </CardSummary.Description>
           </CardSummary>
